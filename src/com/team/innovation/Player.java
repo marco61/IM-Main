@@ -19,10 +19,13 @@ public class Player implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	Vector2 position;
+	Vector2 velocity = new Vector2();
+	Vector2 acceleration = new Vector2();
 	String textureLoc;
 
 	private static final int col = 4;
 	private static final int row = 4;
+	private static final float GRAVITY = -15f;
 
 	Animation animation;
 	Texture playerTexture;
@@ -73,7 +76,7 @@ public class Player implements Serializable {
 		} else {
 			stateTime = 0;
 		}
-
+		acceleration.y = GRAVITY;
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		
@@ -185,7 +188,15 @@ public class Player implements Serializable {
 	public Vector2 getPosition() {
 		return position;
 	}
-
+	
+	public Vector2 getVelocity() {
+		return velocity;
+	}
+	
+	public Vector2 getAcceleration() {
+		return acceleration;
+	}
+	
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
