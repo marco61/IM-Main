@@ -25,7 +25,11 @@ public class Player implements Serializable {
 
 	private static final int col = 4;
 	private static final int row = 4;
+<<<<<<< HEAD
 	private static final float GRAVITY = -15f; //arbitrary for now
+=======
+	private static final float GRAVITY = -15f;
+>>>>>>> abc6a19a441a922b81c01489c2484320d229123a
 
 	Animation animation;
 	Texture playerTexture;
