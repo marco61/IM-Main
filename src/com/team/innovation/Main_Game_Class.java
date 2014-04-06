@@ -15,11 +15,13 @@ public class Main_Game_Class implements ApplicationListener {
 	Texture mT;
 	Player mP;	
 	Vector2 position;
+	World world;
 	
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		mT = new Texture(Gdx.files.internal("data/testSS.png"));
+		world = new World();
 		
 		if(Gdx.files.local("player.dat").exists()){
 			try {
