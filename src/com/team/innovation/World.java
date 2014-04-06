@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.Array;
 public class World {
 	
 	private static final float GRAVITY = -15f; //arbitrary for now
-	Array objects = new Array();
+	Array<Obstacle> objects = new Array<Obstacle>();
 	Random rand = new Random();
 	
 	public World() {
@@ -18,6 +18,9 @@ public class World {
 	}
 	
 	private void createWorld() {
-		
+		for (int i = 0; i < rand.nextInt(6); i++) {
+			objects.add(new Obstacle(new Vector2(rand.nextInt(10), rand.nextInt())));
+		}
+		objects.add(new Obstacle(new Vector2(rand.nextInt(10), rand.nextInt(7))));
 	}
 }
