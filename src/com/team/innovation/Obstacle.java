@@ -15,6 +15,10 @@ public class Obstacle {
 	TextureRegion[] frames;
 	TextureRegion currentFrame;
 	
+	public Rectangle getBounds() {
+		return rectangle;
+	}
+	
 	public Obstacle(Vector2 position) {
 		obstacleTexture = new Texture(Gdx.files.internal("data/sw.png")); //needs actual asset
 		TextureRegion[][] tmp = TextureRegion
@@ -23,5 +27,9 @@ public class Obstacle {
 		this.position = position;
 		this.rectangle.width = SIZE;
 		this.rectangle.height = SIZE;
+	}
+
+	public Vector2 getPosition() {
+		return position;
 	}
 }

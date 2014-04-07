@@ -17,6 +17,10 @@ public class World {
 		createWorld();
 	}
 	
+	public Array<Obstacle> getArray() {
+		return objects;
+	}
+	
 	private void createWorld() {
 		for (int i = 0; i < rand.nextInt(6); i++) {
 			objects.add(new Obstacle(new Vector2(rand.nextInt(10), rand.nextInt())));
