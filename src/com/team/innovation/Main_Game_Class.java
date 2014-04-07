@@ -16,12 +16,14 @@ public class Main_Game_Class implements ApplicationListener {
 	Player mP;	
 	Vector2 position;
 	World world;
+	WorldRender worldRender;
 	
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
 		mT = new Texture(Gdx.files.internal("data/testSS.png"));
 		world = new World();
+		worldRender = new WorldRender(world);
 		
 		if(Gdx.files.local("player.dat").exists()){
 			try {
