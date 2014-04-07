@@ -64,6 +64,12 @@ public class Player {
 	}
 
 	public void update() {
+		/**DEBUG 
+		float x = this.position.x;
+		float y = this.position.y;
+		System.out.print("(" + x + ", ");
+		System.out.println(y + ")");
+		**/
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
 		} else {
