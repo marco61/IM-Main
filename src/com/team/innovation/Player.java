@@ -1,15 +1,8 @@
 package com.team.innovation;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.Serializable;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -25,6 +18,7 @@ public class Player implements Serializable {
 
 	private static final int col = 4;
 	private static final int row = 4;
+
 	private static final float GRAVITY = -15f; //arbitrary for now
 
 	Animation animation;
@@ -96,11 +90,6 @@ public class Player implements Serializable {
 			position.y -= 2f;
 			currentFrame = animation.getKeyFrame(0 + stateTime);
 		}
-
-		if (Gdx.input.isTouched()) {
-			System.out.println("Touched!");
-		}
-
 		
 
 		float accelX = Gdx.input.getAccelerometerX();
@@ -144,46 +133,6 @@ public class Player implements Serializable {
 
 	}
 
-	public static void savePlayer(Player playerPosition) throws IOException {
-		FileHandle file = Gdx.files.local("player.dat");
-		OutputStream out = null;
-		try {
-			file.writeBytes(serialize(playerPosition.getPosition()), false);
-		} catch (Exception ex) {
-			System.out.println(ex.toString());
-		} finally {
-			if (out != null)
-				try {
-					out.close();
-				} catch (Exception ex) {
-				}
-		}
-
-		System.out.println("Saving Player");
-	}
-
-	public static Vector2 readPlayer() throws IOException,
-			ClassNotFoundException {
-		Vector2 playerPosition = null;
-		FileHandle file = Gdx.files.local("player.dat");
-		playerPosition = (Vector2) deserialize(file.readBytes());
-		return playerPosition;
-	}
-
-	@SuppressWarnings("unused")
-	private static byte[] serialize(Object obj) throws IOException {
-		ByteArrayOutputStream b = new ByteArrayOutputStream();
-		ObjectOutputStream o = new ObjectOutputStream(b);
-		o.writeObject(obj);
-		return b.toByteArray();
-	}
-
-	public static Object deserialize(byte[] bytes) throws IOException,
-			ClassNotFoundException {
-		ByteArrayInputStream b = new ByteArrayInputStream(bytes);
-		ObjectInputStream o = new ObjectInputStream(b);
-		return o.readObject();
-	}
 
 	public Vector2 getPosition() {
 		return position;
