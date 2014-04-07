@@ -9,14 +9,13 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Player {
 
-	private static final long serialVersionUID = 1L;
 	Vector2 position;
 	Vector2 velocity = new Vector2();
 	Vector2 acceleration = new Vector2();
 	String textureLoc;
 
-	private static final int col = 4;
-	private static final int row = 4;
+	private static final int col = 1;
+	private static final int row = 1;
 
 	private static final float GRAVITY = -15f; //arbitrary for now
 
@@ -29,7 +28,7 @@ public class Player {
 	public Player(Vector2 position, String textureLoc) {
 		this.position = position;
 
-		playerTexture = new Texture(Gdx.files.internal("data/dgbh.png"));
+		playerTexture = new Texture(Gdx.files.internal("data/planeRed1.png"));
 		TextureRegion[][] tmp = TextureRegion
 				.split(playerTexture, playerTexture.getWidth() / col,
 						playerTexture.getHeight() / row);
