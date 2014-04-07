@@ -10,15 +10,15 @@ import com.badlogic.gdx.math.Vector2;
 public class Main_Game_Class implements ApplicationListener {
 	
 	SpriteBatch batch;
-	Texture mT;
+	Texture mT,texture;
 	Player mP;	
 	Vector2 position;
 	
 	@Override
 	public void create() {
 		batch = new SpriteBatch();
-		mT = new Texture(Gdx.files.internal("data/testSS.png"));
-		mP = new Player(new Vector2(10, 300), "data/mT.jpg");
+		mP = new Player(new Vector2(0, 0), "data/planeRed1.png");
+		texture = new Texture(Gdx.files.internal("data/pppp.png"));
 		
 		}
 				
@@ -36,8 +36,6 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void render() {		
-		
-		Texture texture = new Texture(Gdx.files.internal("data/pppp.png"));
 
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT); 
 	     
@@ -46,8 +44,6 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.draw(texture, 0, 0);
 	     
 		batch.end();
-		
-		mT.dispose();
 		
 		mP.update();
 		
