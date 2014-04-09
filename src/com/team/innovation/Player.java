@@ -17,7 +17,7 @@ public class Player {
 	private static final int col = 1;
 	private static final int row = 1;
 
-	private static final float GRAVITY = -15f; // arbitrary for now
+	private static final float GRAVITY = -5f; //Needs tweaking. 10 seems too fast.
 
 	Animation animation;
 	Texture playerTexture;
@@ -63,7 +63,7 @@ public class Player {
 	}
 
 	public void update() {
-		/** DEBUG
+		/** DEBUG **/
 		float x = this.position.x;
 		float y = this.position.y;
 		System.out.print("Current: ");
@@ -71,7 +71,7 @@ public class Player {
 		System.out.print(y + ") ");
 		System.out.println("Max: (" + Gdx.graphics.getWidth() + ", "
 				+ Gdx.graphics.getHeight() + ")");
-		**/
+
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
 		} else {
@@ -143,6 +143,11 @@ public class Player {
 
 		if (accelY < -3) {
 			System.out.println("y axis is " + accelX);
+		}
+
+		else {
+			if (position.y > 0)
+				position.y += GRAVITY;
 		}
 
 	}
