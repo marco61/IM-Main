@@ -17,7 +17,7 @@ public class Player {
 	private static final int col = 1;
 	private static final int row = 1;
 
-	private static final float GRAVITY = -15f; //arbitrary for now
+	private static final float GRAVITY = -15f; // arbitrary for now
 
 	Animation animation;
 	Texture playerTexture;
@@ -63,11 +63,14 @@ public class Player {
 	}
 
 	public void update() {
-		/**DEBUG 
+		/** DEBUG
 		float x = this.position.x;
 		float y = this.position.y;
+		System.out.print("Current: ");
 		System.out.print("(" + x + ", ");
-		System.out.println(y + ")");
+		System.out.print(y + ") ");
+		System.out.println("Max: (" + Gdx.graphics.getWidth() + ", "
+				+ Gdx.graphics.getHeight() + ")");
 		**/
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
@@ -77,7 +80,6 @@ public class Player {
 		acceleration.y = GRAVITY;
 		stateTime += Gdx.graphics.getDeltaTime();
 
-		
 		if (Gdx.input.isKeyPressed(Keys.W)) {
 			position.y += 2f;
 			currentFrame = animation.getKeyFrame(8 + stateTime);
@@ -94,29 +96,37 @@ public class Player {
 			position.y -= 2f;
 			currentFrame = animation.getKeyFrame(0 + stateTime);
 		}
-		
 
 		float accelX = Gdx.input.getAccelerometerX();
 		float accelY = Gdx.input.getAccelerometerY();
 
 		if (accelX < -1) {
-			position.y -= accelX;
-			currentFrame = animation.getKeyFrame(8 + stateTime);
+			if (position.y < Gdx.graphics.getHeight()) {
+				position.y -= accelX;
+				currentFrame = animation.getKeyFrame(8 + stateTime);
+			}
 		}
-	
+
 		if (accelX > +1) {
-			position.y -= accelX;
-			currentFrame = animation.getKeyFrame(0 + stateTime);
+
+			if (position.y > 0) {
+				position.y -= accelX;
+				currentFrame = animation.getKeyFrame(0 + stateTime);
+			}
 		}
-		
+
 		if (accelY < -1) {
-			position.x += accelY;
-			currentFrame = animation.getKeyFrame(16 + stateTime);
+			if (position.x > 0) {
+				position.x += accelY;
+				currentFrame = animation.getKeyFrame(16 + stateTime);
+			}
 		}
-		
+
 		if (accelY > +1) {
-			position.x += accelY;
-			currentFrame = animation.getKeyFrame(24 + stateTime);
+			if (position.x < Gdx.graphics.getWidth()) {
+				position.x += accelY;
+				currentFrame = animation.getKeyFrame(24 + stateTime);
+			}
 		}
 
 		if (accelX > 3) {
@@ -137,19 +147,18 @@ public class Player {
 
 	}
 
-
 	public Vector2 getPosition() {
 		return position;
 	}
-	
+
 	public Vector2 getVelocity() {
 		return velocity;
 	}
-	
+
 	public Vector2 getAcceleration() {
 		return acceleration;
 	}
-	
+
 	public void setPosition(Vector2 position) {
 		this.position = position;
 	}
