@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Player {
 
@@ -13,6 +14,9 @@ public class Player {
 	Vector2 velocity = new Vector2();
 	Vector2 acceleration = new Vector2();
 	String textureLoc;
+
+	private static final int HEIGHT = Gdx.graphics.getHeight();
+	private static final int WIDTH = Gdx.graphics.getWidth();
 
 	private static final int col = 1;
 	private static final int row = 1;
@@ -78,6 +82,7 @@ public class Player {
 		acceleration.y = GRAVITY;
 		stateTime += Gdx.graphics.getDeltaTime();
 
+		/** Desktop Controls **/
 		if (Gdx.input.isKeyPressed(Keys.W)) {
 			position.y += 2f;
 			currentFrame = animation.getKeyFrame(8 + stateTime);
@@ -95,18 +100,18 @@ public class Player {
 			currentFrame = animation.getKeyFrame(0 + stateTime);
 		}
 
+		/** Accelerometer Controls (to become deprecated) **/
 		float accelX = Gdx.input.getAccelerometerX();
 		float accelY = Gdx.input.getAccelerometerY();
 
 		if (accelX < -1) {
-			if (position.y < Gdx.graphics.getHeight()) {
+			if (position.y < HEIGHT) {
 				position.y -= accelX;
 				currentFrame = animation.getKeyFrame(8 + stateTime);
 			}
 		}
 
 		if (accelX > +1) {
-
 			if (position.y > 0) {
 				position.y -= accelX;
 				currentFrame = animation.getKeyFrame(0 + stateTime);
@@ -121,7 +126,7 @@ public class Player {
 		}
 
 		if (accelY > +1) {
-			if (position.x < Gdx.graphics.getWidth()) {
+			if (position.x < WIDTH) {
 				position.x += accelY;
 				currentFrame = animation.getKeyFrame(24 + stateTime);
 			}
@@ -148,6 +153,24 @@ public class Player {
 				position.y += GRAVITY;
 		}
 
+		/** Touch Controls **/
+
+	}
+
+	/* Needs animation support, eventually */
+	public boolean touchUp(int x, int y, int pointer, int button) {
+		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y < HEIGHT) {
+			return true;
+		}
+		return false;
+	}
+
+	/* Needs animation support, eventually */
+	public boolean touchDown(int x, int y, int pointer, int button) {
+		if (x > WIDTH / 2 && y < HEIGHT / 2 && position.y < HEIGHT) {
+			return true;
+		}
+		return false;
 	}
 
 	public Vector2 getPosition() {
