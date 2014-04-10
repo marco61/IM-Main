@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Player {
 
@@ -14,6 +13,7 @@ public class Player {
 	Vector2 velocity = new Vector2();
 	Vector2 acceleration = new Vector2();
 	String textureLoc;
+	TheInputProcessor inputProcessor = new TheInputProcessor();
 
 	private static final int HEIGHT = Gdx.graphics.getHeight();
 	private static final int WIDTH = Gdx.graphics.getWidth();
