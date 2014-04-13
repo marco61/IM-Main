@@ -13,7 +13,6 @@ public class Player {
 	Vector2 velocity = new Vector2();
 	Vector2 acceleration = new Vector2();
 	String textureLoc;
-	TheInputProcessor inputProcessor = new TheInputProcessor();
 
 	private static final int HEIGHT = Gdx.graphics.getHeight();
 	private static final int WIDTH = Gdx.graphics.getWidth();
@@ -21,8 +20,7 @@ public class Player {
 	private static final int col = 1;
 	private static final int row = 1;
 
-	private static final float GRAVITY = -5f; // Needs tweaking. 10 seems too
-												// fast.
+	private static final float GRAVITY = -5f; 
 
 	Animation animation;
 	Texture playerTexture;
@@ -68,12 +66,6 @@ public class Player {
 	}
 
 	public void update() {
-		/**
-		 * DEBUG float x = this.position.x; float y = this.position.y;
-		 * System.out.print("Current: "); System.out.print("(" + x + ", ");
-		 * System.out.print(y + ") "); System.out.println("Max: (" +
-		 * Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight() + ")");
-		 **/
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
 		} else {
@@ -100,76 +92,36 @@ public class Player {
 			currentFrame = animation.getKeyFrame(0 + stateTime);
 		}
 
-		/** Accelerometer Controls (to become deprecated) **/
-		float accelX = Gdx.input.getAccelerometerX();
-		float accelY = Gdx.input.getAccelerometerY();
-
-		if (accelX < -1) {
-			if (position.y < HEIGHT) {
-				position.y -= accelX;
-				currentFrame = animation.getKeyFrame(8 + stateTime);
-			}
-		}
-
-		if (accelX > +1) {
-			if (position.y > 0) {
-				position.y -= accelX;
-				currentFrame = animation.getKeyFrame(0 + stateTime);
-			}
-		}
-
-		if (accelY < -1) {
-			if (position.x > 0) {
-				position.x += accelY;
-				currentFrame = animation.getKeyFrame(16 + stateTime);
-			}
-		}
-
-		if (accelY > +1) {
-			if (position.x < WIDTH) {
-				position.x += accelY;
-				currentFrame = animation.getKeyFrame(24 + stateTime);
-			}
-		}
-
-		if (accelX > 3) {
-			System.out.println("x axis is " + accelX);
-		}
-
-		if (accelX < -3) {
-			System.out.println("x axis is " + accelX);
-		}
-
-		if (accelY > 3) {
-			System.out.println("y axis is " + accelX);
-		}
-
-		if (accelY < -3) {
-			System.out.println("y axis is " + accelX);
-		}
-
-		else {
-			if (position.y > 0)
-				position.y += GRAVITY;
-		}
-
 		/** Touch Controls **/
+		if (Gdx.input.isTouched()) {
+			if (touchUp(Gdx.input.getX(), Gdx.input.getY())) {
+				position.y += 15f;
+			}
+			if (touchDown(Gdx.input.getX(), Gdx.input.getY())) {
+				position.y -= 7f;
+			}
+		}
 
+		/** Gravity **/
+		if (position.y > 0)
+			position.y += GRAVITY;
 	}
 
-	/* Needs animation support, eventually */
-	public boolean touchUp(int x, int y, int pointer, int button) {
-		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y < HEIGHT) {
+	public boolean touchUp(int x, int y) {
+		if (x > WIDTH / 2 && y < HEIGHT / 2 && position.y < HEIGHT) {
 			return true;
 		}
 		return false;
 	}
 
-	/* Needs animation support, eventually */
-	public boolean touchDown(int x, int y, int pointer, int button) {
-		if (x > WIDTH / 2 && y < HEIGHT / 2 && position.y < HEIGHT) {
+	public boolean touchDown(int x, int y) {
+		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y > 0) {
 			return true;
 		}
+		return false;
+	}
+
+	public boolean touchBoost(int x, int y) {
 		return false;
 	}
 
@@ -220,5 +172,4 @@ public class Player {
 	public void setStateTime(float stateTime) {
 		this.stateTime = stateTime;
 	}
-
 }
