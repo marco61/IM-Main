@@ -27,10 +27,6 @@ public class Main_Game_Class implements ApplicationListener {
 	@Override
 	public void dispose() {
 
-		batch.dispose();
-
-		mT.dispose();
-
 	}
 
 	@Override
@@ -58,6 +54,13 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
+		
+		camera.viewportWidth = width;
+	    
+		camera.viewportHeight = height;
+	    
+		camera.position.set(width/2f, height/2f, 0);
+	
 	}
 
 	@Override
