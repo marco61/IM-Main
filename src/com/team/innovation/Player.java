@@ -20,7 +20,7 @@ public class Player {
 	private static final int col = 1;
 	private static final int row = 1;
 
-	private static final float GRAVITY = -5f; 
+	private static final float GRAVITY = -5f;
 
 	Animation animation;
 	Texture playerTexture;
@@ -94,17 +94,19 @@ public class Player {
 
 		/** Touch Controls **/
 		if (Gdx.input.isTouched()) {
-			if (touchUp(Gdx.input.getX(), Gdx.input.getY())) {
+			if (touchUp(Gdx.input.getX(), Gdx.input.getY()))
 				position.y += 15f;
-			}
-			if (touchDown(Gdx.input.getX(), Gdx.input.getY())) {
-				position.y -= 7f;
-			}
+			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
+				position.y -= 10f;
+			else if (position.y > 0)
+				position.y += GRAVITY;
 		}
 
 		/** Gravity **/
-		if (position.y > 0)
+		else if (position.y > 0)
 			position.y += GRAVITY;
+		// else if (position.y == 0)
+		// Gdx.input.vibrate(100);
 	}
 
 	public boolean touchUp(int x, int y) {
@@ -118,10 +120,6 @@ public class Player {
 		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y > 0) {
 			return true;
 		}
-		return false;
-	}
-
-	public boolean touchBoost(int x, int y) {
 		return false;
 	}
 
