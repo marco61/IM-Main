@@ -20,8 +20,8 @@ public class Main_Game_Class implements ApplicationListener {
 	public void create() {
 		camera = new OrthographicCamera(1280, 720);
 		batch = new SpriteBatch();
-		mP = new Player(new Vector2(0, 0), "data/planeRed1.png");
-		texture = new Texture(Gdx.files.internal("data/BB.png"));
+		mP = new Player(new Vector2(0, Gdx.graphics.getHeight() * 4 / 5), "data/planeRed2.png");
+		texture = new Texture(Gdx.files.internal("data/btb.png"));
 	}
 
 	@Override
