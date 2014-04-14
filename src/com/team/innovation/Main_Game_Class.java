@@ -36,6 +36,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void dispose() {
+
 	}
 
 	@Override
@@ -65,6 +66,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void resize(int width, int height) {
+
 	}
 
 	@Override
