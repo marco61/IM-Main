@@ -10,27 +10,29 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Main_Game_Class implements ApplicationListener {
 
-	private static final int CAMERA_WIDTH = 1920;
-	private static final int CAMERA_HEIGHT = 1080;
 	SpriteBatch batch;
 	Texture mT, texture;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
+	Texture ramp;
 
 	@Override
 	public void create() {
+		final int HEIGHT = Gdx.graphics.getHeight();
+		final int WIDTH = Gdx.graphics.getWidth();
+
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
-		mP = new Player(new Vector2(0, Gdx.graphics.getHeight() * 4 / 5),
-				"data/planeRed2.png");
+		mP = new Player(new Vector2(0, HEIGHT * 4 / 5), "data/planeRed2.png");
 		texture = new Texture(Gdx.files.internal("data/btb.png"));
 
 		/** Set up camera **/
-		camera = new OrthographicCamera(Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		camera = new OrthographicCamera(WIDTH, HEIGHT);
+		camera.setToOrtho(false, WIDTH, HEIGHT);
 		camera.update();
+		
+		/** Build the ramp **/
 	}
 
 	@Override
@@ -53,8 +55,8 @@ public class Main_Game_Class implements ApplicationListener {
 
 		mP.update();
 
-		camera.translate(mP.getPosition().x - camera.position.x, 0);
-		
+		camera.translate(mP.getPosition().x - camera.position.x + Gdx.graphics.getWidth() / 2, 0);
+
 		camera.update();
 
 		batch.begin();
