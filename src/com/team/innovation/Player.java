@@ -43,7 +43,8 @@ public class Player {
 				frames[index++] = tmp[i][j];
 			}
 		}
-
+		
+		velocity.x = 5f;
 		animation = new Animation(1f, frames);
 		stateTime = 0f;
 		currentFrame = animation.getKeyFrame(0);
@@ -117,8 +118,9 @@ public class Player {
 			position.y += 10f;
 		}
 
-		/** Constant Movement **/
-		position.x += 5f;
+		/** Horizontal Movement **/
+		position.x += velocity.x;
+		velocity.x += acceleration.x;
 	}
 
 	public boolean touchUp(int x, int y) {
