@@ -30,7 +30,6 @@ public class Main_Game_Class implements ApplicationListener {
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
 		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-//		camera.position.set(mP.getPosition().x, CAMERA_HEIGHT / 2, 0);
 		camera.update();
 	}
 
