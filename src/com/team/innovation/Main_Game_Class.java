@@ -29,8 +29,8 @@ public class Main_Game_Class implements ApplicationListener {
 		/** Set up camera **/
 		camera = new OrthographicCamera(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-		camera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
-		camera.position.set(mP.getPosition().x, CAMERA_HEIGHT / 2, 0);
+		camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+//		camera.position.set(mP.getPosition().x, CAMERA_HEIGHT / 2, 0);
 		camera.update();
 	}
 
@@ -54,7 +54,9 @@ public class Main_Game_Class implements ApplicationListener {
 
 		mP.update();
 
-		camera.position.set(camera.position.x + 5f, camera.position.y, 0);
+		camera.translate(mP.getPosition().x - camera.position.x, 0);
+		
+		camera.update();
 
 		batch.begin();
 
