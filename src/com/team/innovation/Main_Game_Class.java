@@ -51,6 +51,8 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.begin();
 
 		batch.draw(texture, 0, 0);
+		
+		batch.draw(ramp,0,0);
 
 		batch.end();
 

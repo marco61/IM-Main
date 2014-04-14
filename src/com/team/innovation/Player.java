@@ -112,8 +112,10 @@ public class Player {
 		/** Gravity **/
 		else if (position.y > 0)
 			position.y += GRAVITY;
-		// else if (position.y == 0)
-		// Gdx.input.vibrate(100);
+		else if (position.y <= 0) {
+			Gdx.input.vibrate(100);
+			position.y += 10f;
+		}
 
 		/** Constant Movement **/
 		position.x += 5f;
