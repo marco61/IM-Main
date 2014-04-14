@@ -94,9 +94,16 @@ public class Player {
 
 		/** Touch Controls **/
 		if (Gdx.input.isTouched()) {
-			if (touchUp(Gdx.input.getX(), Gdx.input.getY()))
+			/*
+			 * Respect multitouch such that the latest touch is always used, up
+			 * to two fingers.
+			 */
+			int pointer = 0;
+			if (Gdx.input.isTouched(1))
+				pointer = 1;
+			if (touchUp(Gdx.input.getX(pointer), Gdx.input.getY(pointer)))
 				position.y += 15f;
-			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
+			if (touchDown(Gdx.input.getX(pointer), Gdx.input.getY(pointer)))
 				position.y -= 10f;
 			else if (position.y > 0)
 				position.y += GRAVITY;
@@ -107,7 +114,7 @@ public class Player {
 			position.y += GRAVITY;
 		// else if (position.y == 0)
 		// Gdx.input.vibrate(100);
-		
+
 		/** Constant Movement **/
 		position.x += 5f;
 	}
