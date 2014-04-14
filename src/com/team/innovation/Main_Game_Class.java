@@ -24,7 +24,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
-		mP = new Player(new Vector2(0, HEIGHT * 4 / 5), "data/planeRed2.png");
+		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5), "data/planeRed2.png");
 		texture = new Texture(Gdx.files.internal("data/btb.png"));
 
 		/** Set up camera **/
@@ -33,6 +33,7 @@ public class Main_Game_Class implements ApplicationListener {
 		camera.update();
 		
 		/** Build the ramp **/
+		ramp = new Texture(Gdx.files.internal("data/Start Area.png")); 
 	}
 
 	@Override
@@ -55,7 +56,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 		mP.update();
 
-		camera.translate(mP.getPosition().x - camera.position.x + Gdx.graphics.getWidth() / 2, 0);
+		camera.translate(mP.getPosition().x - camera.position.x + Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 5, 0);
 
 		camera.update();
 
