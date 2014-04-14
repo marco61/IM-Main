@@ -10,6 +10,8 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Main_Game_Class implements ApplicationListener {
 
+	private static final int CAMERA_WIDTH = 1920;
+	private static final int CAMERA_HEIGHT = 1080;
 	SpriteBatch batch;
 	Texture mT, texture;
 	Player mP;
@@ -18,19 +20,22 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void create() {
-		camera = new OrthographicCamera(1280, 720);
+		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
-		mP = new Player(new Vector2(0, Gdx.graphics.getHeight() * 4 / 5), "data/planeRed2.png");
+		mP = new Player(new Vector2(0, Gdx.graphics.getHeight() * 4 / 5),
+				"data/planeRed2.png");
 		texture = new Texture(Gdx.files.internal("data/btb.png"));
+
+		/** Set up camera **/
+		camera = new OrthographicCamera(Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+		camera.setToOrtho(false, CAMERA_WIDTH, CAMERA_HEIGHT);
+		camera.position.set(mP.getPosition().x, CAMERA_HEIGHT / 2, 0);
+		camera.update();
 	}
 
 	@Override
 	public void dispose() {
-
-		batch.dispose();
-
-		mT.dispose();
-
 	}
 
 	@Override
@@ -38,7 +43,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		//batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined);
 
 		batch.begin();
 
@@ -47,6 +52,8 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.end();
 
 		mP.update();
+
+		camera.position.set(camera.position.x + 5f, camera.position.y, 0);
 
 		batch.begin();
 

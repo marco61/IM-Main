@@ -107,6 +107,9 @@ public class Player {
 			position.y += GRAVITY;
 		// else if (position.y == 0)
 		// Gdx.input.vibrate(100);
+		
+		/** Constant Movement **/
+		position.x += 5f;
 	}
 
 	public boolean touchUp(int x, int y) {
