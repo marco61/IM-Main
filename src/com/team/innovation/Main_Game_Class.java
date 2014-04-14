@@ -56,7 +56,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 		mP.update();
 
-		camera.translate(mP.getPosition().x - camera.position.x + Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 5, 0);
+		camera.translate(mP.getPosition().x - camera.position.x + Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 10, 0);
 
 		camera.update();
 
