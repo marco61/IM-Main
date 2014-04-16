@@ -63,9 +63,9 @@ public class Main_Game_Class implements ApplicationListener {
 
 		batch.draw(texture, 8192, 0);
 
-		batch.draw(ramp,0,0);
-		
-		lArr = world.getArray(); //needs to be implemented...?
+		batch.draw(ramp, 0, 0);
+
+		lArr = world.getArray(); // needs to be implemented...?
 
 		batch.end();
 
@@ -83,7 +83,6 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.draw(mP.getCurrentFrame(), mP.getPosition().x, mP.getPosition().y);
 
 		batch.end();
-
 	}
 
 	@Override
