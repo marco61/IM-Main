@@ -16,11 +16,14 @@ public class Main_Game_Class implements ApplicationListener {
 	Vector2 position;
 	OrthographicCamera camera;
 	Texture ramp;
+	String message;
+	BitmapFont text;
 
 	@Override
 	public void create() {
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
+		String message = "";
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
