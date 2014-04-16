@@ -21,9 +21,6 @@ public class Obstacle {
 	
 	public Obstacle(Vector2 position) {
 		obstacleTexture = new Texture(Gdx.files.internal("data/sw.png")); //needs actual asset
-		TextureRegion[][] tmp = TextureRegion
-				.split(obstacleTexture, obstacleTexture.getWidth(),
-						obstacleTexture.getHeight());
 		this.position = position;
 		this.rectangle.width = SIZE;
 		this.rectangle.height = SIZE;
