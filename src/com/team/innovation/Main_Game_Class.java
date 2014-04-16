@@ -21,6 +21,7 @@ public class Main_Game_Class implements ApplicationListener {
 	String message;
 	BitmapFont text;
 	Array<Obstacle> lArr;
+	World world = new World();
 
 	@Override
 	public void create() {
@@ -59,8 +60,6 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.draw(texture, 0, 0);
 		
 		batch.draw(ramp,0,0);
-		
-		World world = new World();
 		
 		lArr = world.getArray(); //needs to be implemented...?
 
