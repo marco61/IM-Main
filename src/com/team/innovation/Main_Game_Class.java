@@ -5,8 +5,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class Main_Game_Class implements ApplicationListener {
 
@@ -18,6 +20,7 @@ public class Main_Game_Class implements ApplicationListener {
 	Texture ramp;
 	String message;
 	BitmapFont text;
+	Array<Obstacle> lArr;
 
 	@Override
 	public void create() {
@@ -56,6 +59,10 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.draw(texture, 0, 0);
 		
 		batch.draw(ramp,0,0);
+		
+		World world = new World();
+		
+		lArr = world.getArray(); //needs to be implemented...?
 
 		batch.end();
 
