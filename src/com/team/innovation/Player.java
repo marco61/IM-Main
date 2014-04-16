@@ -125,6 +125,9 @@ public class Player {
 		/** Horizontal Movement **/
 		position.x += velocity.x;
 		velocity.x += acceleration.x;
+		if (velocity.x > 5f) {
+			acceleration.x -= .1f; // arbitrary, not tested.
+		}
 	}
 
 	/** End Update Loop **/
