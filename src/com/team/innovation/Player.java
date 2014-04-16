@@ -49,7 +49,7 @@ public class Player {
 				frames[index++] = tmp[i][j];
 			}
 		}
-		
+
 		velocity.x = 5f;
 		animation = new Animation(1f, frames);
 		stateTime = 0f;
@@ -76,6 +76,7 @@ public class Player {
 		this.playerTexture = playerTexture;
 	}
 
+	/** Update Loop **/
 	public void update() {
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
@@ -125,6 +126,8 @@ public class Player {
 		position.x += velocity.x;
 		velocity.x += acceleration.x;
 	}
+
+	/** End Update Loop **/
 
 	public boolean touchUp(int x, int y) {
 		if (x > WIDTH / 2 && y < HEIGHT / 2 && position.y < HEIGHT) {

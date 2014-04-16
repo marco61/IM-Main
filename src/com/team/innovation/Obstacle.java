@@ -19,11 +19,7 @@ public class Obstacle {
 		return rectangle;
 	}
 	
-	public Obstacle(Vector2 position) {
-		obstacleTexture = new Texture(Gdx.files.internal("data/sw.png")); //needs actual asset
-		TextureRegion[][] tmp = TextureRegion
-				.split(obstacleTexture, obstacleTexture.getWidth(),
-						obstacleTexture.getHeight());
+	public Obstacle(Vector2 position) { 
 		this.position = position;
 		this.rectangle.width = SIZE;
 		this.rectangle.height = SIZE;
@@ -31,5 +27,12 @@ public class Obstacle {
 
 	public Vector2 getPosition() {
 		return position;
+	}
+	
+	public Texture textureReturn() {
+		
+		obstacleTexture = new Texture(Gdx.files.internal("data/sw.png")); //needs real asset
+		
+		return obstacleTexture;
 	}
 }
