@@ -14,13 +14,16 @@ public class Obstacle {
 	Texture obstacleTexture;
 	TextureRegion[] frames;
 	TextureRegion currentFrame;
+	int x;
+	int y;
 	
 	public Rectangle getBounds() {
 		return rectangle;
 	}
 	
-	public Obstacle(Vector2 position) { 
-		this.position = position;
+	public Obstacle(int f1v,int f2v) { 
+		this.x = f1v;
+		this.y = f2v;
 		this.rectangle.width = SIZE;
 		this.rectangle.height = SIZE;
 	}
