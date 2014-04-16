@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Circle;
 
 public class Player {
 
@@ -21,7 +22,12 @@ public class Player {
 	private static final int row = 1;
 
 	private static final float GRAVITY = -5f;
-
+	
+	private Circle boundingCircle;
+	private static final float xComp = 5f;
+	private static final float yComp = 5f;
+	private static final float playerRadius = 5f;
+	
 	Animation animation;
 	Texture playerTexture;
 	TextureRegion[] frames;
@@ -48,8 +54,12 @@ public class Player {
 		animation = new Animation(1f, frames);
 		stateTime = 0f;
 		currentFrame = animation.getKeyFrame(0);
+		boundingCircle.set(xComp, yComp, playerRadius);
 	}
 
+	public Circle getCircle(){
+		return boundingCircle;
+	}
 	public String getTextureLoc() {
 		return textureLoc;
 	}
