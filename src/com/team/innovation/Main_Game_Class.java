@@ -5,6 +5,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -16,27 +18,29 @@ public class Main_Game_Class implements ApplicationListener {
 	Vector2 position;
 	OrthographicCamera camera;
 	Texture ramp;
-	String message;
+	String score;
 	BitmapFont text;
 
 	@Override
 	public void create() {
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
-		String message = "";
+		score = "0";
+		text = new BitmapFont(Gdx.files.internal("data/arial-15"));
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
-		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5), "data/planeRed2.png");
+		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5),
+				"data/planeRed2.png");
 		texture = new Texture(Gdx.files.internal("data/btb.png"));
 
 		/** Set up camera **/
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 		camera.update();
-		
+
 		/** Build the ramp **/
-		ramp = new Texture(Gdx.files.internal("data/Start Area.png")); 
+		ramp = new Texture(Gdx.files.internal("data/Start Area.png"));
 	}
 
 	@Override
@@ -54,23 +58,30 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.begin();
 
 		batch.draw(texture, 0, 0);
-		
-		batch.draw(ramp,0,0);
+
+		batch.draw(ramp, 0, 0);
 
 		batch.end();
 
 		mP.update();
 
-		camera.translate(mP.getPosition().x - camera.position.x + Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth() / 10, 0);
+		camera.translate(
+				mP.getPosition().x - camera.position.x
+						+ Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()
+						/ 10, 0);
 
 		camera.update();
 
 		batch.begin();
+		TextBounds tb = text.getBounds("Hello");
+		float x = Gdx.graphics.getWidth() / 2 - tb.width / 2;
+		float y = Gdx.graphics.getHeight() / 2 + tb.height / 2;
+		text.drawMultiLine(batch, "Hello", x, y);// Gdx.graphics.getWidth() / 30,
+		// Gdx.graphics.getHeight() / 10);
 
 		batch.draw(mP.getCurrentFrame(), mP.getPosition().x, mP.getPosition().y);
 
 		batch.end();
-
 	}
 
 	@Override
