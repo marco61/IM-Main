@@ -193,4 +193,9 @@ public class Player {
 	public void setStateTime(float stateTime) {
 		this.stateTime = stateTime;
 	}
+	
+	public void setAcceleration(Vector2 v){
+		this.acceleration.x += v.x;
+		this.acceleration.y += v.y;
+	}
 }
