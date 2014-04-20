@@ -54,7 +54,7 @@ public class Player {
 		animation = new Animation(1f, frames);
 		stateTime = 0f;
 		currentFrame = animation.getKeyFrame(0);
-		boundingCircle.set(xComp, yComp, playerRadius);
+		boundingCircle = new Circle(xComp, yComp, playerRadius);
 	}
 
 	public Circle getCircle(){
