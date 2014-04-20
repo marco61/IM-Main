@@ -28,16 +28,16 @@ public class Main_Game_Class implements ApplicationListener {
 	public void create() {
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
-		
+
 		score = "0";
-		text = new BitmapFont(Gdx.files.internal("data/arial-15"));
+		// text = new BitmapFont(Gdx.files.internal("data/arial-15"));
 		String message = ""; // TODO
 		world = new World();
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
 		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5),
-				"data/planeRed2.png");
+				"data/planeRed2.png"); // This does nothing at all.
 		texture = new Texture(Gdx.files.internal("data/btb.png"));
 
 		/** Set up camera **/
@@ -65,8 +65,8 @@ public class Main_Game_Class implements ApplicationListener {
 
 		batch.draw(texture, 0, 0);
 
-
-		batch.draw(texture, 8192, 0);
+		for (int i = 0; i <= mP.getPosition().x / 4096; i++)
+			batch.draw(texture, 4096 * (i + 1), 0);
 
 		batch.draw(ramp, 0, 0);
 
@@ -84,10 +84,11 @@ public class Main_Game_Class implements ApplicationListener {
 		camera.update();
 
 		batch.begin();
-		TextBounds tb = text.getBounds("Hello");
-		float x = Gdx.graphics.getWidth() / 2 - tb.width / 2;
-		float y = Gdx.graphics.getHeight() / 2 + tb.height / 2;
-		text.drawMultiLine(batch, "Hello", x, y);// Gdx.graphics.getWidth() / 30,
+		// TextBounds tb = text.getBounds("Hello");
+		// float x = Gdx.graphics.getWidth() / 2 - tb.width / 2;
+		// float y = Gdx.graphics.getHeight() / 2 + tb.height / 2;
+		// text.drawMultiLine(batch, "Hello", x, y);// Gdx.graphics.getWidth() /
+		// 30,
 		// Gdx.graphics.getHeight() / 10);
 
 		batch.draw(mP.getCurrentFrame(), mP.getPosition().x, mP.getPosition().y);
