@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 
 public class Main_Game_Class implements ApplicationListener {
 
@@ -20,13 +21,18 @@ public class Main_Game_Class implements ApplicationListener {
 	Texture ramp;
 	String score;
 	BitmapFont text;
+	Array<Obstacle> lArr;
+	World world;
 
 	@Override
 	public void create() {
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
+		
 		score = "0";
 		text = new BitmapFont(Gdx.files.internal("data/arial-15"));
+		String message = ""; // TODO
+		world = new World();
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
@@ -59,7 +65,12 @@ public class Main_Game_Class implements ApplicationListener {
 
 		batch.draw(texture, 0, 0);
 
+
+		batch.draw(texture, 8192, 0);
+
 		batch.draw(ramp, 0, 0);
+
+		lArr = world.getArray(); // needs to be implemented...?
 
 		batch.end();
 

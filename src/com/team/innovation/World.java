@@ -23,8 +23,8 @@ public class World {
 	
 	private void createWorld() {
 		for (int i = 0; i < rand.nextInt(6); i++) {
-			objects.add(new Obstacle(new Vector2(rand.nextInt(10), rand.nextInt())));
+			objects.add(new Obstacle(rand.nextInt(10), rand.nextInt()));
 		}
-		objects.add(new Obstacle(new Vector2(rand.nextInt(10), rand.nextInt(7))));
+		objects.add(new Obstacle(rand.nextInt(10), rand.nextInt(7)));
 	}
 }

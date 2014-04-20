@@ -14,22 +14,28 @@ public class Obstacle {
 	Texture obstacleTexture;
 	TextureRegion[] frames;
 	TextureRegion currentFrame;
+	int x;
+	int y;
 	
 	public Rectangle getBounds() {
 		return rectangle;
 	}
 	
-	public Obstacle(Vector2 position) {
-		obstacleTexture = new Texture(Gdx.files.internal("data/sw.png")); //needs actual asset
-		TextureRegion[][] tmp = TextureRegion
-				.split(obstacleTexture, obstacleTexture.getWidth(),
-						obstacleTexture.getHeight());
-		this.position = position;
+	public Obstacle(int f1v,int f2v) { 
+		this.x = f1v;
+		this.y = f2v;
 		this.rectangle.width = SIZE;
 		this.rectangle.height = SIZE;
 	}
 
 	public Vector2 getPosition() {
 		return position;
+	}
+	
+	public Texture textureReturn() {
+		
+		obstacleTexture = new Texture(Gdx.files.internal("data/sw.png")); //needs real asset
+		
+		return obstacleTexture;
 	}
 }
