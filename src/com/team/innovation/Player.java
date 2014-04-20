@@ -194,8 +194,13 @@ public class Player {
 		this.stateTime = stateTime;
 	}
 	
-	public void setAcceleration(Vector2 v){
-		this.acceleration.x += v.x;
-		this.acceleration.y += v.y;
+	public void setAcceleration(Vector2 accel){
+		this.acceleration.x += accel.x;
+		this.acceleration.y += accel.y;
+	}
+	
+	public void setVelocity(Vector2 v){
+		this.velocity.x += v.x;
+		this.velocity.y += v.y;
 	}
 }

@@ -1,18 +1,22 @@
 package com.team.innovation;
 import com.badlogic.gdx.math.Circle;
+import com.badlogic.gdx.math.Vector2;
 public class Star {
-float x;
-float y;
+float xAxis;//add the values from google doc.
+float yAxis;
 float radius;
 private Circle star;
 private Player bob;
 private CollisionHelpers collide;
-	public Star(float x, float y, float radius){
+Vector2 acceleration = new Vector2();
+Vector2 position = new Vector2();
+String TextureLoc;
+	public Star(float xAxis, float yAxis, float radius){
 		star = new Circle();
-		star.set(x, y, radius);
-		bob = new Player(null, null);
+		star.set(xAxis, yAxis, radius);
+		bob = new Player(position, TextureLoc);
 		if(collide.collidesWithCircles(star,bob.getCircle())){
-		
+			bob.setAcceleration(acceleration.set(8f, 8f));
 		}
 	}
 }
