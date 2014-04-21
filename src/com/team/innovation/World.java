@@ -2,9 +2,6 @@ package com.team.innovation;
 
 import java.util.Random;
 
-import sun.org.mozilla.javascript.internal.ast.Block;
-
-import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
 public class World {
@@ -23,7 +20,7 @@ public class World {
 	
 	private void createWorld() {
 		for (int i = 0; i < rand.nextInt(6); i++) {
-			objects.add(new Obstacle(rand.nextInt(10), rand.nextInt()));
+			objects.add(new Obstacle(rand.nextInt(10), rand.nextInt(10)));
 		}
 		objects.add(new Obstacle(rand.nextInt(10), rand.nextInt(7)));
 	}
