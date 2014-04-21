@@ -89,6 +89,9 @@ public class Main_Game_Class implements ApplicationListener {
 
 			check = 1;
 
+			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
+				batch.draw(texture, 4096 * (i + 1), 0);
+			}
 		}
 
 		// ///// Game
