@@ -22,12 +22,12 @@ public class Player {
 	private static final int row = 1;
 
 	private static final float GRAVITY = -5f;
-	
+
 	private Circle boundingCircle;
 	private static final float xComp = 5f;
 	private static final float yComp = 5f;
 	private static final float playerRadius = 5f;
-	
+
 	Animation animation;
 	Texture playerTexture;
 	TextureRegion[] frames;
@@ -57,9 +57,10 @@ public class Player {
 		boundingCircle = new Circle(xComp, yComp, playerRadius);
 	}
 
-	public Circle getCircle(){
+	public Circle getCircle() {
 		return boundingCircle;
 	}
+
 	public String getTextureLoc() {
 		return textureLoc;
 	}
@@ -114,19 +115,32 @@ public class Player {
 				position.y += GRAVITY;
 		}
 
-		/** Gravity **/
+		/** Gravity and Ground **/
 		else if (position.y > 0)
 			position.y += GRAVITY;
 		else if (position.y <= 0) {
 			Gdx.input.vibrate(100);
-			position.y += 10f;
+			if (velocity.x > 0) {
+				position.y += 10f;
+				acceleration.x -= .07f;
+			}
 		}
 
-		/** Horizontal Movement **/
-		position.x += velocity.x;
-		velocity.x += acceleration.x;
 		if (velocity.x > 5f) {
-			acceleration.x -= .1f; // arbitrary, not tested.
+			acceleration.x -= .03f;
+		} else if (velocity.x < 5f && position.y > 10 && velocity.x > 0)
+			if (velocity.x + .04f > 5f)
+				velocity.x = 5f;
+			else
+				acceleration.x += .04f;
+
+		/** Horizontal Movement **/
+		velocity.x += acceleration.x;
+		position.x += velocity.x;
+
+		if (velocity.x <= 0) {
+			velocity.x = 0;
+			acceleration.x = 0;
 		}
 	}
 
@@ -193,8 +207,8 @@ public class Player {
 	public void setStateTime(float stateTime) {
 		this.stateTime = stateTime;
 	}
-	
-	public void setAcceleration(Vector2 v){
+
+	public void setAcceleration(Vector2 v) {
 		this.acceleration.x += v.x;
 		this.acceleration.y += v.y;
 	}
