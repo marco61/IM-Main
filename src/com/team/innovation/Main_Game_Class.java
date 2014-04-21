@@ -71,99 +71,99 @@ public class Main_Game_Class implements ApplicationListener {
 
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
+
 		switch (state) {
-			case MENU:
-				/* MENU */
-				Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-		
-				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
-				batch.setProjectionMatrix(camera.combined);
-		
-				batch.begin();
-				font.draw(batch, "Welcome to Innovation Flight!!!! ", 100, 400);
-				font.draw(batch, "Tap Anywhere to Begin ", 220, 325);
-				batch.end();
-		
-				if (Gdx.input.isTouched()) {
-					setGameState(gameState.RUNNING);
-				} 
-				break;
+		case MENU:
+			/* MENU */
+			Gdx.gl.glClearColor(0, 0, 0.2f, 1);
 
-			/* GAME */
-			case RUNNING:
-				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-				batch.setProjectionMatrix(camera.combined);
+			batch.setProjectionMatrix(camera.combined);
 
-				batch.begin();
+			batch.begin();
+			font.draw(batch, "Welcome to Innovation Flight!!!! ", WIDTH / 4,
+					HEIGHT / 2);
+			font.draw(batch, "Tap Anywhere to Begin ", WIDTH / 4, HEIGHT / 3);
+			batch.end();
 
-				batch.draw(texture, 0, 0);
-
-				for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
-					batch.draw(texture, 4096 * (i + 1), 0);
-				}
-
-				batch.draw(ramp, 0, 0);
-
-				lArr = world.getArray(); // needs to be implemented...?
-
-				batch.end();
-
-				mP.update();
-
-				camera.translate(mP.getPosition().x - camera.position.x
-						+ Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()
-						/ 10, 0);
-
-				camera.update();
-
-				batch.begin();
-
-				/* Text Display */
-				float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
-				float y = Gdx.graphics.getHeight();
-
-				scoreString += mP.getVelocity().x / 5;
-				score.drawMultiLine(batch, String.valueOf((int) scoreString),
-						x, y);
-				if (mP.getPosition().x / 50 < 13) {
-					text.scale(mP.getPosition().x / 75);
-					text.drawMultiLine(batch, "Go!", x, y);
-				} else
-					text.dispose();
-				/**/
-
-				batch.draw(mP.getCurrentFrame(), mP.getPosition().x,
-						mP.getPosition().y);
-
-				batch.end();
-				if (Gdx.input.isTouched()) {
-					if (Gdx.input.getX() < WIDTH / 10
-							&& Gdx.input.getY() < HEIGHT / 8) {
-						setGameState(gameState.PAUSED);
-					}
-				}
-
-				break;
-
-			case PAUSED:
-				if (Gdx.input.isTouched()) {
-					if (Gdx.input.getX() < WIDTH / 10
-							&& Gdx.input.getY() < HEIGHT / 8) {
-						setGameState(gameState.RUNNING);
-					}
-				}
-				break;
-
-			case RESUMED:
-				break;
-
-			default:
-				break;
+			if (Gdx.input.isTouched()) {
+				setGameState(gameState.RUNNING);
 			}
+			break;
+
+		/* GAME */
+		case RUNNING:
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+			batch.setProjectionMatrix(camera.combined);
+
+			batch.begin();
+
+			batch.draw(texture, 0, 0);
+
+			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
+				batch.draw(texture, 4096 * (i + 1), 0);
+			}
+
+			batch.draw(ramp, 0, 0);
+
+			lArr = world.getArray(); // needs to be implemented...?
+
+			batch.end();
+
+			mP.update();
+
+			camera.translate(mP.getPosition().x - camera.position.x
+					+ Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()
+					/ 10, 0);
+
+			camera.update();
+
+			batch.begin();
+
+			/* Text Display */
+			float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
+			float y = Gdx.graphics.getHeight();
+
+			scoreString += mP.getVelocity().x / 5;
+			score.drawMultiLine(batch, String.valueOf((int) scoreString), x, y);
+			if (mP.getPosition().x / 50 < 13) {
+				text.scale(mP.getPosition().x / 75);
+				text.drawMultiLine(batch, "Go!", x, y);
+			} else
+				text.dispose();
+			/**/
+
+			batch.draw(mP.getCurrentFrame(), mP.getPosition().x,
+					mP.getPosition().y);
+
+			batch.end();
+			if (Gdx.input.isTouched()) {
+				if (Gdx.input.getX() < WIDTH / 10
+						&& Gdx.input.getY() < HEIGHT / 8) {
+					setGameState(gameState.PAUSED);
+				}
+			}
+
+			break;
+
+		case PAUSED:
+			if (Gdx.input.isTouched()) {
+				if (Gdx.input.getX() < WIDTH / 10
+						&& Gdx.input.getY() < HEIGHT / 8) {
+					setGameState(gameState.RUNNING);
+				}
+			}
+			break;
+
+		case RESUMED:
+			break;
+
+		default:
+			break;
 		}
-	
+	}
 
 	@Override
 	public void resize(int width, int height) {
