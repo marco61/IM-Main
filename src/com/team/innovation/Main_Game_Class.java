@@ -13,6 +13,10 @@ import com.badlogic.gdx.utils.Array;
 
 public class Main_Game_Class implements ApplicationListener {
 
+	public enum gameState {
+		PAUSED, RUNNING, RESUMED, STOPPED
+	}
+
 	SpriteBatch batch;
 	Texture mT, texture;
 	Player mP;
@@ -24,7 +28,9 @@ public class Main_Game_Class implements ApplicationListener {
 	BitmapFont score;
 	Array<Obstacle> lArr;
 	World world;
-	
+
+	private gameState state = gameState.RUNNING;
+
 	@Override
 	public void create() {
 		final int HEIGHT = Gdx.graphics.getHeight();
@@ -49,6 +55,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/** Build the ramp **/
 		ramp = new Texture(Gdx.files.internal("data/Start Area.png"));
+
 	}
 
 	@Override
@@ -58,51 +65,79 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void render() {
+		final int HEIGHT = Gdx.graphics.getHeight();
+		final int WIDTH = Gdx.graphics.getWidth();
 
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		switch (state) {
+		case RUNNING:
+			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-		batch.setProjectionMatrix(camera.combined);
+			batch.setProjectionMatrix(camera.combined);
 
-		batch.begin();
+			batch.begin();
 
-		batch.draw(texture, 0, 0);
+			batch.draw(texture, 0, 0);
 
-		for (int i = 0; i <= mP.getPosition().x / 4096; i++)
-			batch.draw(texture, 4096 * (i + 1), 0);
+			for (int i = 0; i <= mP.getPosition().x / 4096; i++)
+				batch.draw(texture, 4096 * (i + 1), 0);
 
-		batch.draw(ramp, 0, 0);
-		
-		lArr = world.getArray(); // needs to be implemented...?
+			batch.draw(ramp, 0, 0);
 
-		batch.end();
+			lArr = world.getArray(); // needs to be implemented...?
 
-		mP.update();
+			batch.end();
 
-		camera.translate(
-				mP.getPosition().x - camera.position.x
-						+ Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()
-						/ 10, 0);
+			mP.update();
 
-		camera.update();
+			camera.translate(mP.getPosition().x - camera.position.x
+					+ Gdx.graphics.getWidth() / 2 - Gdx.graphics.getWidth()
+					/ 10, 0);
 
-		batch.begin();
+			camera.update();
 
-		/* Text Display */
-		float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
-		float y = Gdx.graphics.getHeight();
+			batch.begin();
 
-		scoreString += mP.getVelocity().x / 5;
-		score.drawMultiLine(batch, String.valueOf((int) scoreString), x, y);
-		if (mP.getPosition().x / 50 < 13) {
-			text.scale(mP.getPosition().x / 75);
-			text.drawMultiLine(batch, "Go!", x, y);
-		} else
-			text.dispose();
-		/**/
+			/* Text Display */
+			float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
+			float y = Gdx.graphics.getHeight();
 
-		batch.draw(mP.getCurrentFrame(), mP.getPosition().x, mP.getPosition().y);
+			scoreString += mP.getVelocity().x / 5;
+			score.drawMultiLine(batch, String.valueOf((int) scoreString), x, y);
+			if (mP.getPosition().x / 50 < 13) {
+				text.scale(mP.getPosition().x / 75);
+				text.drawMultiLine(batch, "Go!", x, y);
+			} else
+				text.dispose();
+			/**/
 
-		batch.end();
+			batch.draw(mP.getCurrentFrame(), mP.getPosition().x,
+					mP.getPosition().y);
+
+			batch.end();
+			if (Gdx.input.isTouched()) {
+				if (Gdx.input.getX() < WIDTH / 10
+						&& Gdx.input.getY() < HEIGHT / 8) {
+					setGameState(gameState.PAUSED);
+				}
+			}
+
+			break;
+
+		case PAUSED:
+			if (Gdx.input.isTouched()) {
+				if (Gdx.input.getX() < WIDTH / 10
+						&& Gdx.input.getY() < HEIGHT / 8) {
+					setGameState(gameState.RUNNING);
+				}
+			}
+			break;
+
+		case RESUMED:
+			break;
+
+		default:
+			break;
+		}
 	}
 
 	@Override
@@ -112,10 +147,12 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void pause() {
+		state = gameState.PAUSED;
 	}
 
 	@Override
 	public void resume() {
+		state = gameState.RESUMED;
 	}
 
 	public boolean pan(float x, float y, float deltaX, float deltaY) {
@@ -125,6 +162,9 @@ public class Main_Game_Class implements ApplicationListener {
 		camera.update();
 
 		return false;
+	}
 
+	public void setGameState(gameState s) {
+		state = s;
 	}
 }
