@@ -81,7 +81,7 @@ public class Player {
 	/** Update Loop **/
 	public void update() {
 		targetVelocity = 5f + ((int) position.x / 1500) * .5f;
-		
+
 		System.out.println(targetVelocity + " " + velocity.x);
 
 		if (stateTime < 8) {
@@ -134,7 +134,7 @@ public class Player {
 			Gdx.input.vibrate(100);
 			if (velocity.x > 0) {
 				position.y += 10f;
-				velocity.x -= .1f;
+				velocity.x -= targetVelocity / 50;
 			}
 		}
 
@@ -143,11 +143,12 @@ public class Player {
 				velocity.x = targetVelocity;
 			else
 				velocity.x -= .03f;
-		} else if (velocity.x < targetVelocity && position.y > 10 && velocity.x > 0) {
-			if (velocity.x + .04f > targetVelocity)
+		} else if (velocity.x < targetVelocity && position.y > 10
+				&& velocity.x > 0) {
+			if (velocity.x + .03f > targetVelocity)
 				velocity.x = targetVelocity;
 			else
-				velocity.x += .04f;
+				velocity.x += .03f;
 		}
 
 		/** Horizontal Movement **/
@@ -156,6 +157,7 @@ public class Player {
 		if (velocity.x < 0)
 			velocity.x = 0;
 	}
+
 	/** End Update Loop **/
 
 	public boolean touchUp(int x, int y) {
@@ -229,9 +231,9 @@ public class Player {
 		this.velocity.x += v.x;
 		this.velocity.y += v.y;
 	}
-	
+
 	public boolean gameOver() {
-		if (velocity.x <= 0) 
+		if (velocity.x <= 0)
 			return true;
 		else
 			return false;
