@@ -27,6 +27,7 @@ public class Player {
 	private static final float xComp = 5f;
 	private static final float yComp = 5f;
 	private static final float playerRadius = 5f;
+	private float velocityX = 5f;
 
 	Animation animation;
 	Texture playerTexture;
@@ -79,6 +80,8 @@ public class Player {
 
 	/** Update Loop **/
 	public void update() {
+		//velocityX = 5f + (int) position.x % 2000;
+
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
 		} else {
@@ -122,31 +125,27 @@ public class Player {
 			Gdx.input.vibrate(100);
 			if (velocity.x > 0) {
 				position.y += 10f;
-				acceleration.x -= .05f;
+				velocity.x -= .1f;
 			}
 		}
 
 		if (velocity.x > 5f) {
-			if (velocity.x + acceleration.x < 5f)
+			if (velocity.x - .03f < 5f)
 				velocity.x = 5f;
 			else
-				acceleration.x -= .03f;
+				velocity.x -= .03f;
 		} else if (velocity.x < 5f && position.y > 10 && velocity.x > 0) {
-			if (velocity.x + acceleration.x > 5f)
+			if (velocity.x + .04f > 5f)
 				velocity.x = 5f;
 			else
-				acceleration.x += .04f;
+				velocity.x += .04f;
 		}
 
 		/** Horizontal Movement **/
-		velocity.x += acceleration.x;
 		position.x += velocity.x;
-
-		if (velocity.x <= 0) {
+		
+		if (velocity.x <= 0)
 			velocity.x = 0;
-			acceleration.x = 0;
-		}
-		System.out.println(velocity.x + " " + acceleration.x);
 	}
 
 	/** End Update Loop **/
