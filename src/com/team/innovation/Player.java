@@ -80,7 +80,7 @@ public class Player {
 
 	/** Update Loop **/
 	public void update() {
-		//velocityX = 5f + (int) position.x % 2000;
+		// velocityX = 5f + (int) position.x % 2000;
 
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
@@ -116,6 +116,13 @@ public class Player {
 				position.y -= 10f;
 			else if (position.y > 0)
 				position.y += GRAVITY;
+			else if (position.y <= 0) {
+				Gdx.input.vibrate(100);
+				if (velocity.x > 0) {
+					position.y += 10f;
+					velocity.x -= .1f;
+				}
+			}
 		}
 
 		/** Gravity and Ground **/
@@ -143,7 +150,7 @@ public class Player {
 
 		/** Horizontal Movement **/
 		position.x += velocity.x;
-		
+
 		if (velocity.x <= 0)
 			velocity.x = 0;
 	}
