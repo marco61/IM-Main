@@ -107,7 +107,7 @@ public class Player {
 
 		/** Touch Controls **/
 		if (Gdx.input.isTouched()) {
-			if (touchUp(Gdx.input.getX(), Gdx.input.getY()))
+			if (touchUp(Gdx.input.getX(), Gdx.input.getY()) && velocity.x > 0)
 				position.y += 15f;
 			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
 				position.y -= 10f;
@@ -122,17 +122,21 @@ public class Player {
 			Gdx.input.vibrate(100);
 			if (velocity.x > 0) {
 				position.y += 10f;
-				acceleration.x -= .07f;
+				acceleration.x -= .05f;
 			}
 		}
 
 		if (velocity.x > 5f) {
-			acceleration.x -= .03f;
-		} else if (velocity.x < 5f && position.y > 10 && velocity.x > 0)
-			if (velocity.x + .04f > 5f)
+			if (velocity.x + acceleration.x < 5f)
+				velocity.x = 5f;
+			else
+				acceleration.x -= .03f;
+		} else if (velocity.x < 5f && position.y > 10 && velocity.x > 0) {
+			if (velocity.x + acceleration.x > 5f)
 				velocity.x = 5f;
 			else
 				acceleration.x += .04f;
+		}
 
 		/** Horizontal Movement **/
 		velocity.x += acceleration.x;
@@ -142,6 +146,7 @@ public class Player {
 			velocity.x = 0;
 			acceleration.x = 0;
 		}
+		System.out.println(velocity.x + " " + acceleration.x);
 	}
 
 	/** End Update Loop **/

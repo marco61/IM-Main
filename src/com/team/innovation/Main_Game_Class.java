@@ -24,7 +24,7 @@ public class Main_Game_Class implements ApplicationListener {
 	BitmapFont score;
 	Array<Obstacle> lArr;
 	World world;
-
+	
 	@Override
 	public void create() {
 		final int HEIGHT = Gdx.graphics.getHeight();
@@ -71,7 +71,7 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.draw(texture, 4096 * (i + 1), 0);
 
 		batch.draw(ramp, 0, 0);
-
+		
 		lArr = world.getArray(); // needs to be implemented...?
 
 		batch.end();
@@ -88,16 +88,15 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.begin();
 
 		/* Text Display */
-		TextBounds tb = text.getBounds("Hello");
 		float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
 		float y = Gdx.graphics.getHeight();
-		
+
 		scoreString += mP.getVelocity().x / 5;
 		score.drawMultiLine(batch, String.valueOf((int) scoreString), x, y);
-		if (mP.getPosition().x / 50 < 16) { 
-			text.scale(mP.getPosition().x / 50);
+		if (mP.getPosition().x / 50 < 13) {
+			text.scale(mP.getPosition().x / 75);
 			text.drawMultiLine(batch, "Go!", x, y);
-		} else 
+		} else
 			text.dispose();
 		/**/
 
