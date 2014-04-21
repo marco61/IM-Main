@@ -27,7 +27,7 @@ public class Player {
 	private static final float xComp = 5f;
 	private static final float yComp = 5f;
 	private static final float playerRadius = 5f;
-	private float velocityX = 5f;
+	private float targetVelocity = 5f;
 
 	Animation animation;
 	Texture playerTexture;
@@ -80,7 +80,9 @@ public class Player {
 
 	/** Update Loop **/
 	public void update() {
-		// velocityX = 5f + (int) position.x % 2000;
+		targetVelocity = 5f + ((int) position.x / 1500) * .5f;
+		
+		System.out.println(targetVelocity + " " + velocity.x);
 
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
@@ -136,14 +138,14 @@ public class Player {
 			}
 		}
 
-		if (velocity.x > 5f) {
-			if (velocity.x - .03f < 5f)
-				velocity.x = 5f;
+		if (velocity.x > targetVelocity) {
+			if (velocity.x - .03f < targetVelocity)
+				velocity.x = targetVelocity;
 			else
 				velocity.x -= .03f;
-		} else if (velocity.x < 5f && position.y > 10 && velocity.x > 0) {
-			if (velocity.x + .04f > 5f)
-				velocity.x = 5f;
+		} else if (velocity.x < targetVelocity && position.y > 10 && velocity.x > 0) {
+			if (velocity.x + .04f > targetVelocity)
+				velocity.x = targetVelocity;
 			else
 				velocity.x += .04f;
 		}
@@ -151,10 +153,9 @@ public class Player {
 		/** Horizontal Movement **/
 		position.x += velocity.x;
 
-		if (velocity.x <= 0)
+		if (velocity.x < 0)
 			velocity.x = 0;
 	}
-
 	/** End Update Loop **/
 
 	public boolean touchUp(int x, int y) {
@@ -227,5 +228,12 @@ public class Player {
 	public void setVelocity(Vector2 v) {
 		this.velocity.x += v.x;
 		this.velocity.y += v.y;
+	}
+	
+	public boolean gameOver() {
+		if (velocity.x <= 0) 
+			return true;
+		else
+			return false;
 	}
 }

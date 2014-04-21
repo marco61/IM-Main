@@ -42,7 +42,6 @@ public class Main_Game_Class implements ApplicationListener {
 		text = new BitmapFont();
 		score = new BitmapFont(Gdx.files.internal("data/text.fnt"));
 		font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
-		String message = ""; // TODO
 		world = new World();
 
 		/** Create SpriteBatch and player, load background texture **/
@@ -85,6 +84,10 @@ public class Main_Game_Class implements ApplicationListener {
 			font.draw(batch, "Welcome to Innovation Flight!!!! ", WIDTH / 4,
 					HEIGHT / 2);
 			font.draw(batch, "Tap Anywhere to Begin ", WIDTH / 4, HEIGHT / 3);
+			if (scoreString > 0) {
+				score.drawMultiLine(batch, String.valueOf((int) scoreString),
+						WIDTH / 2, HEIGHT / 2);
+			}
 			batch.end();
 
 			if (Gdx.input.isTouched()) {
@@ -145,6 +148,9 @@ public class Main_Game_Class implements ApplicationListener {
 					setGameState(gameState.PAUSED);
 				}
 			}
+			if (mP.gameOver()) {
+				setGameState(gameState.MENU);
+			}
 
 			break;
 
@@ -153,8 +159,12 @@ public class Main_Game_Class implements ApplicationListener {
 				if (Gdx.input.getX() < WIDTH / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
 					setGameState(gameState.RUNNING);
+				} else if (Gdx.input.getX() > WIDTH * 9 / 10
+						&& Gdx.input.getY() < HEIGHT / 8) {
+					setGameState(gameState.MENU);
 				}
 			}
+
 			break;
 
 		case RESUMED:
