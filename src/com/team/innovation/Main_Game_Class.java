@@ -24,6 +24,8 @@ public class Main_Game_Class implements ApplicationListener {
 	BitmapFont score;
 	Array<Obstacle> lArr;
 	World world;
+	int check = 0;
+	BitmapFont font;
 	
 	@Override
 	public void create() {
@@ -33,6 +35,7 @@ public class Main_Game_Class implements ApplicationListener {
 		scoreString = 0;
 		text = new BitmapFont();
 		score = new BitmapFont(Gdx.files.internal("data/text.fnt"));
+		font = new BitmapFont();
 		String message = ""; // TODO
 		world = new World();
 
@@ -58,10 +61,26 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void render() {
-
+		
+		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+       
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+		
 		batch.setProjectionMatrix(camera.combined);
+		
+		batch.begin();
+        font.draw(batch, "Welcome to Innovation Flight, Tap Anywhere to Begin. ", 250, 200);
+        batch.end();
+
+        if (Gdx.input.isTouched()) {
+           
+        	check = 1;
+           
+        }
+		
+		///////
+        
+        if (check == 1) {
 
 		batch.begin();
 
@@ -103,6 +122,8 @@ public class Main_Game_Class implements ApplicationListener {
 		batch.draw(mP.getCurrentFrame(), mP.getPosition().x, mP.getPosition().y);
 
 		batch.end();
+		
+        }
 	}
 
 	@Override
