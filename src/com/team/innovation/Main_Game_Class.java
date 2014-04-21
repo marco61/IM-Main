@@ -19,8 +19,9 @@ public class Main_Game_Class implements ApplicationListener {
 	Vector2 position;
 	OrthographicCamera camera;
 	Texture ramp;
-	String score;
+	float scoreString;
 	BitmapFont text;
+	BitmapFont score;
 	Array<Obstacle> lArr;
 	World world;
 
@@ -29,8 +30,9 @@ public class Main_Game_Class implements ApplicationListener {
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
 
-		score = "0";
-		// text = new BitmapFont(Gdx.files.internal("data/arial-15"));
+		scoreString = 0;
+		text = new BitmapFont();
+		score = new BitmapFont(Gdx.files.internal("data/text.fnt"));
 		String message = ""; // TODO
 		world = new World();
 
@@ -84,12 +86,20 @@ public class Main_Game_Class implements ApplicationListener {
 		camera.update();
 
 		batch.begin();
-		// TextBounds tb = text.getBounds("Hello");
-		// float x = Gdx.graphics.getWidth() / 2 - tb.width / 2;
-		// float y = Gdx.graphics.getHeight() / 2 + tb.height / 2;
-		// text.drawMultiLine(batch, "Hello", x, y);// Gdx.graphics.getWidth() /
-		// 30,
-		// Gdx.graphics.getHeight() / 10);
+
+		/* Text Display */
+		TextBounds tb = text.getBounds("Hello");
+		float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
+		float y = Gdx.graphics.getHeight();
+		
+		scoreString += mP.getVelocity().x / 5;
+		score.drawMultiLine(batch, String.valueOf((int) scoreString), x, y);
+		if (mP.getPosition().x / 50 < 16) { 
+			text.scale(mP.getPosition().x / 50);
+			text.drawMultiLine(batch, "Go!", x, y);
+		} else 
+			text.dispose();
+		/**/
 
 		batch.draw(mP.getCurrentFrame(), mP.getPosition().x, mP.getPosition().y);
 
