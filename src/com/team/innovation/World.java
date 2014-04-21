@@ -19,9 +19,8 @@ public class World {
 	}
 	
 	private void createWorld() {
-		for (int i = 0; i < rand.nextInt(6); i++) {
+		for (int i = 0; i < 1000; i++) {
 			objects.add(new Obstacle(rand.nextInt(10), rand.nextInt(10)));
 		}
-		objects.add(new Obstacle(rand.nextInt(10), rand.nextInt(7)));
 	}
 }

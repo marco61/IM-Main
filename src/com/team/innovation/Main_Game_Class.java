@@ -17,7 +17,7 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, texture;
+	Texture mT, texture, oT;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
@@ -43,12 +43,14 @@ public class Main_Game_Class implements ApplicationListener {
 		score = new BitmapFont(Gdx.files.internal("data/text.fnt"));
 		font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
 		world = new World();
+		lArr = world.getArray();
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
 		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5),
 				"data/planeRed2.png"); // This does nothing at all.
 		texture = new Texture(Gdx.files.internal("data/btb.png"));
+		oT = new Texture(Gdx.files.internal("data/Star.png"));
 
 		/** Set up camera **/
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -81,13 +83,15 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.setProjectionMatrix(camera.combined);
 
 			batch.begin();
-			font.draw(batch, "Welcome to Innovation Flight!!!! ", WIDTH / 4,
+			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 5),
 					HEIGHT / 2);
-			font.draw(batch, "Tap Anywhere to Begin ", WIDTH / 4, HEIGHT / 3);
+
+			font.draw(batch, "Tap Anywhere to Begin ", WIDTH / 2, HEIGHT / 3);
 			if (scoreString > 0) {
 				score.drawMultiLine(batch, String.valueOf((int) scoreString),
 						WIDTH / 2, HEIGHT / 2);
 			}
+
 			batch.end();
 
 			if (Gdx.input.isTouched()) {
@@ -110,8 +114,6 @@ public class Main_Game_Class implements ApplicationListener {
 			}
 
 			batch.draw(ramp, 0, 0);
-
-			lArr = world.getArray(); // needs to be implemented...?
 
 			batch.end();
 
@@ -142,16 +144,27 @@ public class Main_Game_Class implements ApplicationListener {
 					mP.getPosition().y);
 
 			batch.end();
+
+			batch.begin();
+
+			lArr = world.getArray();
+
+			for (int z = 0; z < lArr.size; z++) {
+				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
+			}
+
+			batch.end();
+
 			if (Gdx.input.isTouched()) {
 				if (Gdx.input.getX() < WIDTH / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
 					setGameState(gameState.PAUSED);
 				}
 			}
+
 			if (mP.gameOver()) {
 				setGameState(gameState.MENU);
 			}
-
 			break;
 
 		case PAUSED:
