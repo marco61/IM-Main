@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
 public class Main_Game_Class implements ApplicationListener {
 
 	public enum gameState {
-		PAUSED, RUNNING, RESUMED, STOPPED
+		PAUSED, RUNNING, RESUMED, STOPPED, MENU
 	}
 
 	SpriteBatch batch;
@@ -28,7 +28,7 @@ public class Main_Game_Class implements ApplicationListener {
 	Array<Obstacle> lArr;
 	World world;
 
-	private gameState state = gameState.RUNNING;
+	private gameState state = gameState.MENU;
 
 	int check = 0;
 	BitmapFont font;
@@ -71,28 +71,26 @@ public class Main_Game_Class implements ApplicationListener {
 
 		final int HEIGHT = Gdx.graphics.getHeight();
 		final int WIDTH = Gdx.graphics.getWidth();
+		switch (state) {
+			case MENU:
+				/* MENU */
+				Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+		
+				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+				batch.setProjectionMatrix(camera.combined);
+		
+				batch.begin();
+				font.draw(batch, "Welcome to Innovation Flight!!!! ", 100, 400);
+				font.draw(batch, "Tap Anywhere to Begin ", 220, 325);
+				batch.end();
+		
+				if (Gdx.input.isTouched()) {
+					setGameState(gameState.RUNNING);
+				} 
+				break;
 
-		// ///// Menu
-
-		Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-		batch.setProjectionMatrix(camera.combined);
-
-		batch.begin();
-		font.draw(batch, "Welcome to Innovation Flight!!!! ", 100, 400);
-		font.draw(batch, "Tap Anywhere to Begin ", 220, 325);
-		batch.end();
-
-		if (Gdx.input.isTouched()) {
-			check = 1;
-		}
-
-		/////// Game
-
-		if (check == 1) {
-			switch (state) {
+			/* GAME */
 			case RUNNING:
 				Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -164,10 +162,8 @@ public class Main_Game_Class implements ApplicationListener {
 			default:
 				break;
 			}
-
-			batch.end();
 		}
-	}
+	
 
 	@Override
 	public void resize(int width, int height) {
