@@ -147,12 +147,12 @@ public class Main_Game_Class implements ApplicationListener {
 
 			batch.begin();
 
+			/* Objects */
 			lArr = world.getArray();
-
-			for (int z = 0; z < lArr.size; z++) {
+			for (int z = 0; z < 10; z++) {
 				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
 			}
-
+			/* */
 			batch.end();
 
 			if (Gdx.input.isTouched()) {

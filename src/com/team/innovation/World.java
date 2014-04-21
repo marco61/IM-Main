@@ -2,6 +2,7 @@ package com.team.innovation;
 
 import java.util.Random;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.Array;
 
 public class World {
@@ -20,7 +21,7 @@ public class World {
 	
 	private void createWorld() {
 		for (int i = 0; i < 1000; i++) {
-			objects.add(new Obstacle(rand.nextInt(10), rand.nextInt(10)));
+			objects.add(new Obstacle(rand.nextInt(Gdx.graphics.getWidth()), rand.nextInt(Gdx.graphics.getHeight())));
 		}
 	}
 }

@@ -82,8 +82,6 @@ public class Player {
 	public void update() {
 		targetVelocity = 5f + ((int) position.x / 1500) * .5f;
 
-		System.out.println(targetVelocity + " " + velocity.x);
-
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
 		} else {
