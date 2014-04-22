@@ -21,6 +21,7 @@ public class Main_Game_Class implements ApplicationListener {
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
+	OrthographicCamera camera2;
 	Texture ramp;
 	float scoreString;
 	BitmapFont text;
@@ -56,6 +57,11 @@ public class Main_Game_Class implements ApplicationListener {
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 		camera.update();
+		
+		/** Set up camera2 **/
+		camera2 = new OrthographicCamera(WIDTH, HEIGHT);
+		camera2.setToOrtho(false, WIDTH, HEIGHT);
+		camera2.update();
 
 		/** Build the ramp **/
 		ramp = new Texture(Gdx.files.internal("data/Start Area.png"));
@@ -80,16 +86,16 @@ public class Main_Game_Class implements ApplicationListener {
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-			batch.setProjectionMatrix(camera.combined);
+			batch.setProjectionMatrix(camera2.combined);
 
 			batch.begin();
-			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 5),
-					HEIGHT / 2);
+			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 9),
+					HEIGHT - 100);
 
-			font.draw(batch, "Tap Anywhere to Begin ", WIDTH / 2, HEIGHT / 3);
+			font.draw(batch, "Tap Anywhere to Begin ", (WIDTH / 6) + 50, HEIGHT - 250);
 			if (scoreString > 0) {
 				score.drawMultiLine(batch, String.valueOf((int) scoreString),
-						WIDTH / 2, HEIGHT / 2);
+						(WIDTH / 2) - 50, HEIGHT / 4);
 			}
 
 			batch.end();
