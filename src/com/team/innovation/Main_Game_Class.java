@@ -70,7 +70,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-
+		
 	}
 
 	@Override
@@ -82,20 +82,22 @@ public class Main_Game_Class implements ApplicationListener {
 		switch (state) {
 		case MENU:
 			/* MENU */
-			Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+			
+			Gdx.gl.glClearColor(1, 1, 1, 1);
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 			batch.setProjectionMatrix(camera2.combined);
 
 			batch.begin();
+			
 			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 9),
 					HEIGHT - 100);
 
 			font.draw(batch, "Tap Anywhere to Begin ", (WIDTH / 6) + 50, HEIGHT - 250);
 			if (scoreString > 0) {
-				score.drawMultiLine(batch, String.valueOf((int) scoreString),
-						(WIDTH / 2) - 50, HEIGHT / 4);
+				score.drawMultiLine(batch, "Score: " + String.valueOf((int) scoreString),
+						(WIDTH / 3), HEIGHT / 4);
 			}
 
 			batch.end();
@@ -207,15 +209,6 @@ public class Main_Game_Class implements ApplicationListener {
 	@Override
 	public void resume() {
 		state = gameState.RESUMED;
-	}
-
-	public boolean pan(float x, float y, float deltaX, float deltaY) {
-
-		camera.translate(deltaX, 0);
-
-		camera.update();
-
-		return false;
 	}
 
 	public void setGameState(gameState s) {
