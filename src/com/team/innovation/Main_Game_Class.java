@@ -17,7 +17,7 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, texture, oT;
+	Texture mT, texture, oT,gB;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
@@ -28,9 +28,7 @@ public class Main_Game_Class implements ApplicationListener {
 	BitmapFont score;
 	Array<Obstacle> lArr;
 	World world;
-
 	private gameState state = gameState.MENU;
-
 	int check = 0;
 	BitmapFont font;
 
@@ -65,6 +63,10 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/** Build the ramp **/
 		ramp = new Texture(Gdx.files.internal("data/Start Area.png"));
+		
+		/** Grass Block Texture **/
+		gB = new Texture(Gdx.files.internal("data/Grass Block.png")); //Height 171
+
 
 	}
 
@@ -86,6 +88,8 @@ public class Main_Game_Class implements ApplicationListener {
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+			
+			if (scoreString != 0) { this.reset(); }
 
 			batch.setProjectionMatrix(camera2.combined);
 
@@ -116,12 +120,18 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.begin();
 
 			batch.draw(texture, 0, 0);
+			
+			batch.draw(gB, 0, 0);
 
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
 				batch.draw(texture, 4096 * (i + 1), 0);
 			}
+			
+			for (int i = 0; i <= (mP.getPosition().x / 101) + WIDTH; i++) {
+				batch.draw(gB, 101 * (i + 1), 0);
+			}
 
-			batch.draw(ramp, 0, 0);
+			//batch.draw(ramp, 0, 0);
 
 			batch.end();
 
@@ -157,9 +167,11 @@ public class Main_Game_Class implements ApplicationListener {
 
 			/* Objects */
 			lArr = world.getArray();
-			for (int z = 0; z < 10; z++) {
-				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
-			}
+			
+			for (int z = 0; z < 5; z++) {
+					batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
+				}
+				
 			/* */
 			batch.end();
 
@@ -209,6 +221,12 @@ public class Main_Game_Class implements ApplicationListener {
 	@Override
 	public void resume() {
 		state = gameState.RESUMED;
+	}
+	
+	public void reset() {
+		
+		
+		
 	}
 
 	public void setGameState(gameState s) {
