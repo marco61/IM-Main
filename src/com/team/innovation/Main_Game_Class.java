@@ -122,7 +122,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 			batch.end();
 
-			if (Gdx.input.isTouched()) {
+			if (Gdx.input.justTouched()) {
 				/* Test purposes only, resets highscore */
 				if (Gdx.input.getX() > WIDTH * 8 / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
@@ -210,7 +210,7 @@ public class Main_Game_Class implements ApplicationListener {
 			/* */
 			batch.end();
 
-			if (Gdx.input.isTouched()) {
+			if (Gdx.input.justTouched()) {
 				if (Gdx.input.getX() < WIDTH / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
 					setGameState(gameState.PAUSED);
@@ -227,7 +227,7 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.draw(mP.getCurrentFrame(), mP.getPosition().x,
 					mP.getPosition().y);
 			batch.end();
-			if (Gdx.input.isTouched()) {
+			if (Gdx.input.justTouched()) {
 				if (Gdx.input.getX() < WIDTH / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
 					setGameState(gameState.RUNNING);
