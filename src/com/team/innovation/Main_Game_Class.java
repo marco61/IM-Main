@@ -20,12 +20,11 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, backdrop, oT, gB, jet, rock;
+	Texture mT, backdrop, oT, gB, jet, rock, runway;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
 	OrthographicCamera camera2;
-	Texture ramp;
 	float scoreString;
 	BitmapFont text;
 	BitmapFont score;
@@ -72,7 +71,7 @@ public class Main_Game_Class implements ApplicationListener {
 		camera2.update();
 
 		/** Build the ramp **/
-		ramp = new Texture(Gdx.files.internal("data/Start Area.png"));
+		runway = new Texture(Gdx.files.internal("data/Runway.png"));
 
 		/** Grass Block Texture **/
 		gB = new Texture(Gdx.files.internal("data/Grass Block.png")); // Height
@@ -171,7 +170,9 @@ public class Main_Game_Class implements ApplicationListener {
 
 			batch.draw(backdrop, 0, 0);
 
-			batch.draw(gB, 0, 0);
+			batch.draw(gB, 1000, 0);
+
+			batch.draw(runway, 0, 0);
 
 			/* Draw backdrop and grass */
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
@@ -179,7 +180,7 @@ public class Main_Game_Class implements ApplicationListener {
 				}
 
 			for (int i = 0; i <= (mP.getPosition().x / 101) + WIDTH; i++) {
-				batch.draw(gB, 101 * (i + 1), 0);
+				batch.draw(gB, 1000 + 101 * (i + 1), 0);
 			}
 
 			batch.end();
