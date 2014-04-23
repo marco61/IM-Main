@@ -12,7 +12,6 @@ public class Player {
 
 	Vector2 position;
 	Vector2 velocity = new Vector2();
-	Vector2 acceleration = new Vector2();
 	String textureLoc;
 
 	private static final int HEIGHT = Gdx.graphics.getHeight();
@@ -87,7 +86,6 @@ public class Player {
 		} else {
 			stateTime = 0;
 		}
-		acceleration.y = GRAVITY;
 		stateTime += Gdx.graphics.getDeltaTime();
 
 		/** Desktop Controls **/
@@ -126,9 +124,9 @@ public class Player {
 		}
 
 		/** Gravity and Ground **/
-		else if (position.y > 0)
+		else if (position.y > 120)
 			position.y += GRAVITY;
-		else if (position.y <= 0) {
+		else if (position.y <= 120) {
 			Gdx.input.vibrate(100);
 			if (velocity.x > 0) {
 				position.y += 10f;
@@ -141,7 +139,7 @@ public class Player {
 				velocity.x = targetVelocity;
 			else
 				velocity.x -= .03f;
-		} else if (velocity.x < targetVelocity && position.y > 10
+		} else if (velocity.x < targetVelocity && position.y > 130
 				&& velocity.x > 0) {
 			if (velocity.x + .03f > targetVelocity)
 				velocity.x = targetVelocity;
@@ -166,7 +164,7 @@ public class Player {
 	}
 
 	public boolean touchDown(int x, int y) {
-		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y > 0) {
+		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y > 120) {
 			return true;
 		}
 		return false;
@@ -178,10 +176,6 @@ public class Player {
 
 	public Vector2 getVelocity() {
 		return velocity;
-	}
-
-	public Vector2 getAcceleration() {
-		return acceleration;
 	}
 
 	public void setPosition(Vector2 position) {
@@ -218,11 +212,6 @@ public class Player {
 
 	public void setStateTime(float stateTime) {
 		this.stateTime = stateTime;
-	}
-
-	public void setAcceleration(Vector2 accel) {
-		this.acceleration.x += accel.x;
-		this.acceleration.y += accel.y;
 	}
 
 	public void setVelocity(Vector2 v) {

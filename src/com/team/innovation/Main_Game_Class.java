@@ -17,7 +17,7 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, texture, oT,gB;
+	Texture mT, texture, oT, gB;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
@@ -55,7 +55,7 @@ public class Main_Game_Class implements ApplicationListener {
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
 		camera.setToOrtho(false, WIDTH, HEIGHT);
 		camera.update();
-		
+
 		/** Set up camera2 **/
 		camera2 = new OrthographicCamera(WIDTH, HEIGHT);
 		camera2.setToOrtho(false, WIDTH, HEIGHT);
@@ -63,16 +63,16 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/** Build the ramp **/
 		ramp = new Texture(Gdx.files.internal("data/Start Area.png"));
-		
-		/** Grass Block Texture **/
-		gB = new Texture(Gdx.files.internal("data/Grass Block.png")); //Height 171
 
+		/** Grass Block Texture **/
+		gB = new Texture(Gdx.files.internal("data/Grass Block.png")); // Height
+																		// 171
 
 	}
 
 	@Override
 	public void dispose() {
-		
+
 	}
 
 	@Override
@@ -82,25 +82,29 @@ public class Main_Game_Class implements ApplicationListener {
 		final int WIDTH = Gdx.graphics.getWidth();
 
 		switch (state) {
+
+		/* MENU */
 		case MENU:
-			/* MENU */
-			
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-			
-			if (scoreString != 0) { this.reset(); }
+
+			if (scoreString != 0) {
+				this.reset();
+			}
 
 			batch.setProjectionMatrix(camera2.combined);
 
 			batch.begin();
-			
+
 			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 9),
 					HEIGHT - 100);
 
-			font.draw(batch, "Tap Anywhere to Begin ", (WIDTH / 6) + 50, HEIGHT - 250);
+			font.draw(batch, "Tap Anywhere to Begin ", (WIDTH / 6) + WIDTH / 25,
+					HEIGHT - HEIGHT / 3);
 			if (scoreString > 0) {
-				score.drawMultiLine(batch, "Score: " + String.valueOf((int) scoreString),
+				score.drawMultiLine(batch,
+						"Score: " + String.valueOf((int) scoreString),
 						(WIDTH / 3), HEIGHT / 4);
 			}
 
@@ -120,18 +124,18 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.begin();
 
 			batch.draw(texture, 0, 0);
-			
+
 			batch.draw(gB, 0, 0);
 
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
 				batch.draw(texture, 4096 * (i + 1), 0);
 			}
-			
+
 			for (int i = 0; i <= (mP.getPosition().x / 101) + WIDTH; i++) {
 				batch.draw(gB, 101 * (i + 1), 0);
 			}
 
-			//batch.draw(ramp, 0, 0);
+			// batch.draw(ramp, 0, 0);
 
 			batch.end();
 
@@ -167,11 +171,11 @@ public class Main_Game_Class implements ApplicationListener {
 
 			/* Objects */
 			lArr = world.getArray();
-			
+
 			for (int z = 0; z < 5; z++) {
-					batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
-				}
-				
+				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
+			}
+
 			/* */
 			batch.end();
 
@@ -222,11 +226,9 @@ public class Main_Game_Class implements ApplicationListener {
 	public void resume() {
 		state = gameState.RESUMED;
 	}
-	
+
 	public void reset() {
-		
-		
-		
+
 	}
 
 	public void setGameState(gameState s) {
