@@ -18,7 +18,7 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, texture, oT, gB;
+	Texture mT, backdrop, oT, gB;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
@@ -52,7 +52,7 @@ public class Main_Game_Class implements ApplicationListener {
 		batch = new SpriteBatch();
 		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5),
 				"data/planeRed2.png"); // This does nothing at all.
-		texture = new Texture(Gdx.files.internal("data/btb.png"));
+		backdrop = new Texture(Gdx.files.internal("data/btb.png"));
 		oT = new Texture(Gdx.files.internal("data/Star.png"));
 
 		/** Set up camera **/
@@ -154,12 +154,12 @@ public class Main_Game_Class implements ApplicationListener {
 
 			batch.begin();
 
-			batch.draw(texture, 0, 0);
+			batch.draw(backdrop, 0, 0);
 
 			batch.draw(gB, 0, 0);
 
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
-				batch.draw(texture, 4096 * (i + 1), 0);
+				batch.draw(backdrop, 4096 * (i + 1), 0);
 			}
 
 			for (int i = 0; i <= (mP.getPosition().x / 101) + WIDTH; i++) {
@@ -223,6 +223,10 @@ public class Main_Game_Class implements ApplicationListener {
 			break;
 
 		case PAUSED:
+			batch.begin();
+			batch.draw(mP.getCurrentFrame(), mP.getPosition().x,
+					mP.getPosition().y);
+			batch.end();
 			if (Gdx.input.isTouched()) {
 				if (Gdx.input.getX() < WIDTH / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
