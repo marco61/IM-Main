@@ -112,9 +112,9 @@ public class Player {
 				position.y += 15f;
 			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
 				position.y -= 10f;
-			else if (position.y > 0)
+			else if (position.y > 120)
 				position.y += GRAVITY;
-			else if (position.y <= 0) {
+			else if (position.y <= 120) {
 				Gdx.input.vibrate(100);
 				if (velocity.x > 0) {
 					position.y += 10f;
@@ -150,7 +150,7 @@ public class Player {
 		/** Horizontal Movement **/
 		position.x += velocity.x;
 
-		if (velocity.x < 0)
+		if (velocity.x < 0) 
 			velocity.x = 0;
 	}
 
