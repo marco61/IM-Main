@@ -50,8 +50,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
-		mP = new Player(new Vector2(WIDTH * 1 / 10, HEIGHT * 4 / 5),
-				"data/planeRed2.png"); // This does nothing at all.
+		mP = new Player(new Vector2(WIDTH * 1 / 10, 120), "data/planeRed2.png");
 		backdrop = new Texture(Gdx.files.internal("data/btb.png"));
 		oT = new Texture(Gdx.files.internal("data/Star.png"));
 
@@ -158,6 +157,7 @@ public class Main_Game_Class implements ApplicationListener {
 
 			batch.draw(gB, 0, 0);
 
+			/* Draw backdrop and grass */
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
 				batch.draw(backdrop, 4096 * (i + 1), 0);
 			}
@@ -191,6 +191,9 @@ public class Main_Game_Class implements ApplicationListener {
 				text.drawMultiLine(batch, "Go!", x, y);
 			} else
 				text.dispose();
+			if (mP.getPosition().x < WIDTH * 3 / 4 + font.getBounds("Pull up!").width) {
+				font.draw(batch, "Pull up!", WIDTH * 3 / 4, HEIGHT / 3);
+			}
 			/**/
 
 			batch.draw(mP.getCurrentFrame(), mP.getPosition().x,

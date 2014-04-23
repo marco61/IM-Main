@@ -114,7 +114,7 @@ public class Player {
 				position.y -= 10f;
 			else if (position.y > 120)
 				position.y += GRAVITY;
-			else if (position.y <= 120) {
+			else if (position.y <= 120 && position.x > 1000) {
 				Gdx.input.vibrate(100);
 				if (velocity.x > 0) {
 					position.y += 10f;
@@ -126,7 +126,7 @@ public class Player {
 		/** Gravity and Ground **/
 		else if (position.y > 120)
 			position.y += GRAVITY;
-		else if (position.y <= 120) {
+		else if (position.y <= 120 && position.x > 1000) {
 			Gdx.input.vibrate(100);
 			if (velocity.x > 0) {
 				position.y += 10f;
