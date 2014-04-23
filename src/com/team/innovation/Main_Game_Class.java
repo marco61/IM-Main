@@ -176,13 +176,11 @@ public class Main_Game_Class implements ApplicationListener {
 			/* Draw backdrop and grass */
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
 				batch.draw(backdrop, 4096 * (i + 1), 0);
-			}
+				}
 
 			for (int i = 0; i <= (mP.getPosition().x / 101) + WIDTH; i++) {
 				batch.draw(gB, 101 * (i + 1), 0);
 			}
-
-			// batch.draw(ramp, 0, 0);
 
 			batch.end();
 
@@ -229,11 +227,11 @@ public class Main_Game_Class implements ApplicationListener {
 				prob_star = rand.nextInt(1);
 				prob_jet = rand.nextInt(2);
 			}
-			for (int z = 0; z < 5; z++) {
-				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
-			}
-			for (int i = 0; i < 25; i++) {
+
+			for (int i = 0; i < 1000; i++) {
+				if(lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
 				batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
+				}
 			}
 
 			/* */
