@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Star {
 float xAxis;//add the values from google doc.
 float yAxis;
-float radius;
+float radius = 90f ;
 private Circle star;
 private Player bob;
 private CollisionHelpers collide;

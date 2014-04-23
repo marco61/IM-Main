@@ -25,7 +25,7 @@ public class Player {
 	private Circle boundingCircle;
 	private static final float xComp = 5f;
 	private static final float yComp = 5f;
-	private static final float playerRadius = 5f;
+	private static final float playerRadius = 64f;
 	private float targetVelocity = 5f;
 
 	Animation animation;
