@@ -100,8 +100,8 @@ public class Main_Game_Class implements ApplicationListener {
 			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 9),
 					HEIGHT - 100);
 
-			font.draw(batch, "Tap Anywhere to Begin ", (WIDTH / 6) + WIDTH / 25,
-					HEIGHT - HEIGHT / 3);
+			font.draw(batch, "Tap Anywhere to Begin ",
+					(WIDTH / 6) + WIDTH / 25, HEIGHT - HEIGHT / 3);
 			if (scoreString > 0) {
 				score.drawMultiLine(batch,
 						"Score: " + String.valueOf((int) scoreString),
@@ -111,6 +111,10 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.end();
 
 			if (Gdx.input.isTouched()) {
+				if (mP.gameOver()) {
+					this.dispose();
+					this.create();
+				}
 				setGameState(gameState.RUNNING);
 			}
 			break;
