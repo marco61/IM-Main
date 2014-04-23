@@ -169,10 +169,10 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.begin();
 
 			batch.draw(backdrop, 0, 0);
-
-			batch.draw(gB, 1000, 0);
-
+			
 			batch.draw(runway, 0, 0);
+
+			batch.draw(gB, 1000, 0);			
 
 			/* Draw backdrop and grass */
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
