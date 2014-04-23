@@ -1,5 +1,7 @@
 package com.team.innovation;
 
+import java.util.Random;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
@@ -18,7 +20,7 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, backdrop, oT, gB;
+	Texture mT, backdrop, oT, gB, jet, rock;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
@@ -33,7 +35,9 @@ public class Main_Game_Class implements ApplicationListener {
 	int check = 0;
 	BitmapFont font;
 	Preferences prefs;
-	private int highScore = 0, prevHighScore = 0;
+	int prob_rock = 0, prob_star = 0, prob_jet = 0;
+	Random rand;
+	int lastHighscore = 0;
 
 	@Override
 	public void create() {
@@ -47,12 +51,15 @@ public class Main_Game_Class implements ApplicationListener {
 		world = new World();
 		lArr = world.getArray();
 		prefs = Gdx.app.getPreferences("Preferences");
+		rand = new Random();
 
-		/** Create SpriteBatch and player, load background texture **/
+		/** Create SpriteBatch and player, load background & obj textures **/
 		batch = new SpriteBatch();
 		mP = new Player(new Vector2(WIDTH * 1 / 10, 120), "data/planeRed2.png");
 		backdrop = new Texture(Gdx.files.internal("data/btb.png"));
 		oT = new Texture(Gdx.files.internal("data/Star.png"));
+		jet = new Texture(Gdx.files.internal("data/jet.png"));
+		rock = new Texture(Gdx.files.internal("data/Rock.png"));
 
 		/** Set up camera **/
 		camera = new OrthographicCamera(WIDTH, HEIGHT);
@@ -88,6 +95,11 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/* MENU */
 		case MENU:
+			String s1 = "New highscore!",
+			s2 = "Game Over!",
+			s3 = "Tap Anywhere to Play Again",
+			s4 = "Welcome to Innovation Flight!!!!",
+			s5 = "Tap Anywhere to Begin";
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -96,27 +108,33 @@ public class Main_Game_Class implements ApplicationListener {
 
 			batch.begin();
 
-			if (scoreString > 0
-					&& (int) scoreString > prefs.getInteger("highscore")) {
-				prevHighScore = prefs.getInteger("highscore");
-				highScore = (int) scoreString;
-				prefs.putInteger("highscore", highScore);
-				prefs.flush();
-			}
-
-			if (highScore > prevHighScore) {
-				font.draw(batch, "New highscore! ", WIDTH / 3, HEIGHT / 2);
-			}
-
-			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 9),
-					HEIGHT - 100);
-
-			font.draw(batch, "Tap Anywhere to Begin ",
-					(WIDTH / 6) + WIDTH / 25, HEIGHT - HEIGHT / 3);
 			if (scoreString > 0) {
-				score.drawMultiLine(batch,
+				if ((int) scoreString > prefs.getInteger("highscore")) {
+					lastHighscore = prefs.getInteger("highscore");
+					prefs.putInteger("highscore", (int) scoreString);
+					prefs.flush();
+				}
+				if ((int) scoreString > lastHighscore) {
+					font.draw(batch, s1, WIDTH / 2 - font.getBounds(s1).width
+							/ 2, HEIGHT * 7 / 10);
+				}
+				score.drawMultiLine(
+						batch,
 						"Score: " + String.valueOf((int) scoreString),
-						(WIDTH / 3), HEIGHT / 4);
+						WIDTH
+								/ 2
+								- font.getBounds("Score: " + (int) scoreString).width
+								/ 2, HEIGHT * 3 / 5);
+				font.draw(batch, s2, WIDTH / 2 - font.getBounds(s2).width / 2,
+						HEIGHT * 4 / 5);
+				font.draw(batch, s3, WIDTH / 2 - font.getBounds(s3).width / 2,
+						HEIGHT * 2 / 5);
+			} else {
+				font.draw(batch, s4, WIDTH / 2 - font.getBounds(s4).width / 2,
+						HEIGHT * 3 / 5);
+
+				font.draw(batch, s5, WIDTH / 2 - font.getBounds(s5).width / 2,
+						HEIGHT * 2 / 5);
 			}
 
 			batch.end();
@@ -125,8 +143,6 @@ public class Main_Game_Class implements ApplicationListener {
 				/* Test purposes only, resets highscore */
 				if (Gdx.input.getX() > WIDTH * 8 / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
-					highScore = 0;
-					prevHighScore = 0;
 					prefs.putInteger("highscore", 0);
 					scoreString = 0;
 					Gdx.input.vibrate(100);
@@ -191,7 +207,9 @@ public class Main_Game_Class implements ApplicationListener {
 				text.drawMultiLine(batch, "Go!", x, y);
 			} else
 				text.dispose();
-			if (mP.getPosition().x < WIDTH * 3 / 4 + font.getBounds("Pull up!").width) {
+			if (mP.getPosition().x < WIDTH * 3 / 4
+					+ font.getBounds("Pull up!").width
+					&& mP.getPosition().y < HEIGHT / 3) {
 				font.draw(batch, "Pull up!", WIDTH * 3 / 4, HEIGHT / 3);
 			}
 			/**/
@@ -206,8 +224,18 @@ public class Main_Game_Class implements ApplicationListener {
 			/* Objects */
 			lArr = world.getArray();
 
-			for (int z = 0; z < 5; z++) {
-				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
+			if (mP.getPosition().x % WIDTH == 0) {
+				prob_rock = rand.nextInt(6);
+				prob_star = rand.nextInt(1);
+				prob_jet = rand.nextInt(2);
+			}
+			for (int z = 0; z < prob_star; z++) {
+				batch.draw(oT, lArr.get(z).x + mP.getPosition().x,
+						lArr.get(z).y + mP.getPosition().x);
+			}
+			for (int i = 0; i < prob_rock; i++) {
+				batch.draw(rock, lArr.get(i).x + mP.getPosition().x,
+						lArr.get(i).y + mP.getPosition().x / 4096);
 			}
 
 			/* */
