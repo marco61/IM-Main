@@ -229,13 +229,11 @@ public class Main_Game_Class implements ApplicationListener {
 				prob_star = rand.nextInt(1);
 				prob_jet = rand.nextInt(2);
 			}
-			for (int z = 0; z < prob_star; z++) {
-				batch.draw(oT, lArr.get(z).x + mP.getPosition().x,
-						lArr.get(z).y + mP.getPosition().x);
+			for (int z = 0; z < 5; z++) {
+				batch.draw(oT, lArr.get(z).x, lArr.get(z).y);
 			}
-			for (int i = 0; i < prob_rock; i++) {
-				batch.draw(rock, lArr.get(i).x + mP.getPosition().x,
-						lArr.get(i).y + mP.getPosition().x / 4096);
+			for (int i = 0; i < 25; i++) {
+				batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
 			}
 
 			/* */
