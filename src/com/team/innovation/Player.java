@@ -50,7 +50,7 @@ public class Player {
 			}
 		}
 
-		velocity.x = 5f;
+		velocity.x = 0f;
 		animation = new Animation(1f, frames);
 		stateTime = 0f;
 		currentFrame = animation.getKeyFrame(0);
@@ -108,8 +108,8 @@ public class Player {
 
 		/** Touch Controls **/
 		if (Gdx.input.isTouched()) {
-			if (touchUp(Gdx.input.getX(), Gdx.input.getY()) && velocity.x > 0)
-				position.y += 15f;
+			if (touchUp(Gdx.input.getX(), Gdx.input.getY()) && velocity.x > 4f)
+				position.y += 15f * (velocity.x / targetVelocity);
 			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
 				position.y -= 10f;
 			else if (position.y > 120)
@@ -139,8 +139,8 @@ public class Player {
 				velocity.x = targetVelocity;
 			else
 				velocity.x -= .03f;
-		} else if (velocity.x < targetVelocity && position.y > 130
-				&& velocity.x > 0) {
+		} else if (velocity.x < targetVelocity
+				&& ((position.y > 130 && (velocity.x > 0)) || position.x < 1000)) {
 			if (velocity.x + .03f > targetVelocity)
 				velocity.x = targetVelocity;
 			else
@@ -150,7 +150,7 @@ public class Player {
 		/** Horizontal Movement **/
 		position.x += velocity.x;
 
-		if (velocity.x < 0) 
+		if (velocity.x < 0)
 			velocity.x = 0;
 	}
 
@@ -220,7 +220,7 @@ public class Player {
 	}
 
 	public boolean gameOver() {
-		if (velocity.x <= 0)
+		if (velocity.x <= 0 && position.x > 1000)
 			return true;
 		else
 			return false;
