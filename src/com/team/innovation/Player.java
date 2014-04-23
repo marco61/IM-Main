@@ -108,7 +108,7 @@ public class Player {
 
 		/** Touch Controls **/
 		if (Gdx.input.isTouched()) {
-			if (touchUp(Gdx.input.getX(), Gdx.input.getY()))
+			if (touchUp(Gdx.input.getX(), Gdx.input.getY()) && velocity.x > 4f)
 				position.y += 15f * (velocity.x / targetVelocity);
 			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
 				position.y -= 10f;
