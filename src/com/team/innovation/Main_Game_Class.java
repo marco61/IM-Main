@@ -2,6 +2,7 @@ package com.team.innovation;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -31,6 +32,8 @@ public class Main_Game_Class implements ApplicationListener {
 	private gameState state = gameState.MENU;
 	int check = 0;
 	BitmapFont font;
+	Preferences prefs;
+	private int highScore = 0, prevHighScore = 0;
 
 	@Override
 	public void create() {
@@ -43,6 +46,7 @@ public class Main_Game_Class implements ApplicationListener {
 		font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
 		world = new World();
 		lArr = world.getArray();
+		prefs = Gdx.app.getPreferences("Preferences");
 
 		/** Create SpriteBatch and player, load background texture **/
 		batch = new SpriteBatch();
@@ -89,13 +93,21 @@ public class Main_Game_Class implements ApplicationListener {
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-			if (scoreString != 0) {
-				this.reset();
-			}
-
 			batch.setProjectionMatrix(camera2.combined);
 
 			batch.begin();
+
+			if (scoreString > 0
+					&& (int) scoreString > prefs.getInteger("highscore")) {
+				prevHighScore = prefs.getInteger("highscore");
+				highScore = (int) scoreString;
+				prefs.putInteger("highscore", highScore);
+				prefs.flush();
+			}
+
+			if (highScore > prevHighScore) {
+				font.draw(batch, "New highscore! ", WIDTH / 3, HEIGHT / 2);
+			}
 
 			font.draw(batch, "Welcome to Innovation Flight!!!! ", (WIDTH / 9),
 					HEIGHT - 100);
@@ -111,11 +123,26 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.end();
 
 			if (Gdx.input.isTouched()) {
-				if (mP.gameOver()) {
-					this.dispose();
-					this.create();
+				/* Test purposes only, resets highscore */
+				if (Gdx.input.getX() > WIDTH * 8 / 10
+						&& Gdx.input.getY() < HEIGHT / 8) {
+					highScore = 0;
+					prevHighScore = 0;
+					prefs.putInteger("highscore", 0);
+					scoreString = 0;
+					Gdx.input.vibrate(100);
+					batch.begin();
+					font.draw(batch, "-Reset-", 0, 0);
+					batch.end();
+					System.out.println("Reset");
+					prefs.flush();
+				} /**/
+				else {
+					if (mP.gameOver()) {
+						this.reset();
+					}
+					setGameState(gameState.RUNNING);
 				}
-				setGameState(gameState.RUNNING);
 			}
 			break;
 
@@ -232,7 +259,8 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	public void reset() {
-
+		this.dispose();
+		this.create();
 	}
 
 	public void setGameState(gameState s) {
