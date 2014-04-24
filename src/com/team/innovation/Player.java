@@ -79,7 +79,9 @@ public class Player {
 
 	/** Update Loop **/
 	public void update() {
-		targetVelocity = 5f + ((int) position.x / 1500) * .5f;
+		if (targetVelocity < 30f) { // Velocity cap
+			targetVelocity = 5f + ((int) position.x / 1500) * .5f;
+		}
 
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
@@ -111,7 +113,7 @@ public class Player {
 			if (touchUp(Gdx.input.getX(), Gdx.input.getY()))
 				position.y += 15f * (velocity.x / targetVelocity);
 			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
-				position.y -= 10f;
+				position.y -= 10f * (velocity.x / targetVelocity);
 			else if (position.y > 120)
 				position.y += GRAVITY;
 			else if (position.y <= 120 && position.x > 1000) {
