@@ -15,8 +15,8 @@ String TextureLoc;
 		star = new Circle();
 		star.set(xAxis, yAxis, radius);
 		bob = new Player(position, TextureLoc);
-		if(collide.collidesWithCircles(star,bob.getCircle())){
-			bob.setVelocity(acceleration.set(8f, 8f));
-		}
+//		if(collide.collidesWithCircles(star,bob.getCircle())){
+//			bob.setVelocity(acceleration.set(8f, 8f));
+//		}
 	}
 }

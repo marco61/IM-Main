@@ -21,7 +21,7 @@ public class Main_Game_Class implements ApplicationListener {
 	}
 
 	SpriteBatch batch;
-	Texture mT, backdrop, oT, gB, jet, rock, runway;
+	Texture mT, backdrop, star, gB, jet, rock, runway;
 	Player mP;
 	Vector2 position;
 	OrthographicCamera camera;
@@ -30,6 +30,7 @@ public class Main_Game_Class implements ApplicationListener {
 	BitmapFont text;
 	BitmapFont score;
 	Array<Obstacle> lArr;
+	Array<String> objArr;
 	World world;
 	private gameState state = gameState.MENU;
 	int check = 0;
@@ -50,6 +51,7 @@ public class Main_Game_Class implements ApplicationListener {
 		font = new BitmapFont(Gdx.files.internal("data/text.fnt"));
 		world = new World();
 		lArr = world.getArray();
+		objArr = world.getTypes();
 		prefs = Gdx.app.getPreferences("Preferences");
 		rand = new Random();
 
@@ -57,7 +59,7 @@ public class Main_Game_Class implements ApplicationListener {
 		batch = new SpriteBatch();
 		mP = new Player(new Vector2(WIDTH * 1 / 10, 120), "data/planeRed2.png");
 		backdrop = new Texture(Gdx.files.internal("data/btb.png"));
-		oT = new Texture(Gdx.files.internal("data/Star.png"));
+		star = new Texture(Gdx.files.internal("data/Star.png"));
 		jet = new Texture(Gdx.files.internal("data/jet.png"));
 		rock = new Texture(Gdx.files.internal("data/Rock.png"));
 
@@ -71,7 +73,7 @@ public class Main_Game_Class implements ApplicationListener {
 		camera2.setToOrtho(false, WIDTH, HEIGHT);
 		camera2.update();
 
-		/** Build the ramp **/
+		/** Build the runway **/
 		runway = new Texture(Gdx.files.internal("data/Runway.png"));
 
 		/** Grass Block Texture **/
@@ -205,7 +207,6 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.begin();
 
 			/* Objects */
-			lArr = world.getArray();
 
 			if (mP.getPosition().x % WIDTH == 0) {
 				prob_rock = rand.nextInt(6);
@@ -215,15 +216,25 @@ public class Main_Game_Class implements ApplicationListener {
 
 			for (int i = 0; i < 1000; i++) {
 				if (lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
-					batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
-					if (mP.getCircle().overlaps(
-							new Circle(lArr.get(i).x, lArr.get(i).y, 42f))) {
-						mP.collide(-10f);
+					if (objArr.get(i).equals("ROCK")) {
+						batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
+						if (mP.getCircle().overlaps(
+								new Circle(lArr.get(i).x, lArr.get(i).y, 42f))) {
+							mP.collide(-10f, 100);
+						}
+					} else {
+						batch.draw(star, lArr.get(i).x, lArr.get(i).y);
+						if (mP.getCircle().overlaps(
+								new Circle(lArr.get(i).x, lArr.get(i).y, 30f))) {
+							mP.collide(mP.getVelocity().x * 1 / 4, 25);
+							scoreString += 100;
+						}
 					}
 				}
 			}
+
 			/* */
-			
+
 			batch.end();
 
 			if (Gdx.input.justTouched()) {

@@ -80,7 +80,7 @@ public class Player {
 		if (targetVelocity < 30f) { // Velocity cap
 			targetVelocity = 5f + ((int) position.x / 1500) * .5f;
 		}
-		
+
 		boundingCircle.set(position, playerRadius);
 
 		if (stateTime < 8) {
@@ -111,9 +111,15 @@ public class Player {
 		/** Touch Controls **/
 		if (Gdx.input.isTouched()) {
 			if (touchUp(Gdx.input.getX(), Gdx.input.getY()))
-				position.y += 15f * (velocity.x / targetVelocity);
+				if (velocity.x <= targetVelocity)
+					position.y += 15f * (velocity.x / targetVelocity);
+				else
+					position.y += 15f;
 			if (touchDown(Gdx.input.getX(), Gdx.input.getY()))
-				position.y -= 10f * (velocity.x / targetVelocity);
+				if (velocity.x <= targetVelocity)
+					position.y -= 10f * (velocity.x / targetVelocity);
+				else
+					position.y -= 10f;
 			else if (position.y > 120)
 				position.y += GRAVITY;
 			else if (position.y <= 120 && position.x > 1000) {
@@ -216,14 +222,18 @@ public class Player {
 		this.stateTime = stateTime;
 	}
 
-	public void setVelocity(Vector2 v) {
-		this.velocity.x += v.x;
-		this.velocity.y += v.y;
-	}
-	
-	public void collide(float xVel) {
+	/**
+	 * Changes player velocity because of a collision.
+	 * 
+	 * @param xVel
+	 *            The amount by which to change the velocity.
+	 * @param vibrate
+	 *            How many ms to vibrate, if any.
+	 */
+	public void collide(float xVel, int vibrate) {
 		velocity.x += xVel;
-		Gdx.input.vibrate(100);
+		if (vibrate > 0)
+			Gdx.input.vibrate(vibrate);
 		System.out.println("Touch");
 	}
 

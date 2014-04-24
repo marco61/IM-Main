@@ -15,8 +15,8 @@ public class Rock {
 		rock = new Circle();
 		rock.set(xAxis, yAxis, radius);
 		bob = new Player(position, TextureLoc);
-		if(collide.collidesWithCircles(rock,bob.getCircle())){
-			bob.setVelocity(velocity.set(-20f, -20f));
-		}
+//		if(collide.collidesWithCircles(rock,bob.getCircle())){
+//			bob.setVelocity(velocity.set(-20f, -20f));
+//		}
 	}
 }
