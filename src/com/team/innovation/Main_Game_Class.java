@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Circle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -215,7 +216,9 @@ public class Main_Game_Class implements ApplicationListener {
 			for (int i = 0; i < 1000; i++) {
 				if (lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
 					batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
-					if (mP.getPosition().x > 0) {
+					if (mP.getCircle().overlaps(
+							new Circle(lArr.get(i).x, lArr.get(i).y, 20f))) {
+						mP.collide(-10f);
 					}
 				}
 			}
@@ -264,12 +267,14 @@ public class Main_Game_Class implements ApplicationListener {
 	public void resize(int width, int height) {
 
 	}
+
 	/**
 	 * Automates printing horizontally-centered BitmapFont text.
+	 * 
 	 * @param s
-	 * The string to print.
+	 *            The string to print.
 	 * @param height
-	 * The height to print at, out of 10.
+	 *            The height to print at, out of 10.
 	 */
 	private void menuPrint(String s, float height) {
 		font.draw(batch, s, Gdx.graphics.getWidth() / 2

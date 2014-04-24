@@ -20,12 +20,10 @@ public class Player {
 	private static final int col = 1;
 	private static final int row = 1;
 
-	private static final float GRAVITY = -5f;
+	private static final float GRAVITY = -3f;
 
 	private Circle boundingCircle;
-	private static final float xComp = 5f;
-	private static final float yComp = 5f;
-	private static final float playerRadius = 64f;
+	private static final float playerRadius = 20f;
 	private float targetVelocity = 5f;
 
 	Animation animation;
@@ -54,7 +52,7 @@ public class Player {
 		animation = new Animation(1f, frames);
 		stateTime = 0f;
 		currentFrame = animation.getKeyFrame(0);
-		boundingCircle = new Circle(xComp, yComp, playerRadius);
+		boundingCircle = new Circle(position, playerRadius);
 	}
 
 	public Circle getCircle() {
@@ -82,6 +80,8 @@ public class Player {
 		if (targetVelocity < 30f) { // Velocity cap
 			targetVelocity = 5f + ((int) position.x / 1500) * .5f;
 		}
+		
+		boundingCircle.set(position, playerRadius);
 
 		if (stateTime < 8) {
 			stateTime += Gdx.graphics.getDeltaTime();
@@ -219,6 +219,12 @@ public class Player {
 	public void setVelocity(Vector2 v) {
 		this.velocity.x += v.x;
 		this.velocity.y += v.y;
+	}
+	
+	public void collide(float xVel) {
+		velocity.x += xVel;
+		Gdx.input.vibrate(100);
+		System.out.println("Touch");
 	}
 
 	public boolean gameOver() {
