@@ -94,11 +94,6 @@ public class Main_Game_Class implements ApplicationListener {
 
 		/* MENU */
 		case MENU:
-			String s1 = "New highscore!",
-			s2 = "Game Over!",
-			s3 = "Tap Anywhere to Play Again",
-			s4 = "Welcome to Innovation Flight!!!!",
-			s5 = "Tap Anywhere to Begin";
 			Gdx.gl.glClearColor(1, 1, 1, 1);
 
 			Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -114,26 +109,14 @@ public class Main_Game_Class implements ApplicationListener {
 					prefs.flush();
 				}
 				if ((int) scoreString > lastHighscore) {
-					font.draw(batch, s1, WIDTH / 2 - font.getBounds(s1).width
-							/ 2, HEIGHT * 7 / 10);
+					menuPrint("New highscore!", 7);
 				}
-				score.drawMultiLine(
-						batch,
-						"Score: " + String.valueOf((int) scoreString),
-						WIDTH
-								/ 2
-								- font.getBounds("Score: " + (int) scoreString).width
-								/ 2, HEIGHT * 3 / 5);
-				font.draw(batch, s2, WIDTH / 2 - font.getBounds(s2).width / 2,
-						HEIGHT * 4 / 5);
-				font.draw(batch, s3, WIDTH / 2 - font.getBounds(s3).width / 2,
-						HEIGHT * 2 / 5);
+				menuPrint("Score: " + (int) scoreString, 6);
+				menuPrint("Game Over!", 4 / 5);
+				menuPrint("Tap Anywhere to Play Again", 4);
 			} else {
-				font.draw(batch, s4, WIDTH / 2 - font.getBounds(s4).width / 2,
-						HEIGHT * 3 / 5);
-
-				font.draw(batch, s5, WIDTH / 2 - font.getBounds(s5).width / 2,
-						HEIGHT * 2 / 5);
+				menuPrint("Welcome to Innovation Flight!!!!", 6);
+				menuPrint("Tap Anywhere to Begin", 4);
 			}
 
 			batch.end();
@@ -169,15 +152,15 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.begin();
 
 			batch.draw(backdrop, 0, 0);
-			
+
 			batch.draw(runway, 0, 0);
 
-			batch.draw(gB, 1000, 0);			
+			batch.draw(gB, 1000, 0);
 
 			/* Draw backdrop and grass */
 			for (int i = 0; i <= mP.getPosition().x / 4096; i++) {
 				batch.draw(backdrop, 4096 * (i + 1), 0);
-				}
+			}
 
 			for (int i = 0; i <= (mP.getPosition().x / 101) + WIDTH; i++) {
 				batch.draw(gB, 1000 + 101 * (i + 1), 0);
@@ -230,8 +213,10 @@ public class Main_Game_Class implements ApplicationListener {
 			}
 
 			for (int i = 0; i < 1000; i++) {
-				if(lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
-				batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
+				if (lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
+					batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
+					if (mP.getPosition().x > 0) {
+					}
 				}
 			}
 
@@ -278,6 +263,18 @@ public class Main_Game_Class implements ApplicationListener {
 	@Override
 	public void resize(int width, int height) {
 
+	}
+	/**
+	 * Automates printing horizontally-centered BitmapFont text.
+	 * @param s
+	 * The string to print.
+	 * @param height
+	 * The height to print at, out of 10.
+	 */
+	private void menuPrint(String s, float height) {
+		font.draw(batch, s, Gdx.graphics.getWidth() / 2
+				- font.getBounds(s).width / 2,
+				(height / 10) * Gdx.graphics.getHeight());
 	}
 
 	@Override
