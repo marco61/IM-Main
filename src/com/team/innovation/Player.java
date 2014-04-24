@@ -23,7 +23,7 @@ public class Player {
 	private static final float GRAVITY = -3f;
 
 	private Circle boundingCircle;
-	private static final float playerRadius = 20f;
+	private static final float playerRadius = 32f;
 	private float targetVelocity = 5f;
 
 	Animation animation;

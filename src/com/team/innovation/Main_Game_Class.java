@@ -217,13 +217,13 @@ public class Main_Game_Class implements ApplicationListener {
 				if (lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
 					batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
 					if (mP.getCircle().overlaps(
-							new Circle(lArr.get(i).x, lArr.get(i).y, 20f))) {
+							new Circle(lArr.get(i).x, lArr.get(i).y, 42f))) {
 						mP.collide(-10f);
 					}
 				}
 			}
-
 			/* */
+			
 			batch.end();
 
 			if (Gdx.input.justTouched()) {
