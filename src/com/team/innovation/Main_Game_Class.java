@@ -115,7 +115,7 @@ public class Main_Game_Class implements ApplicationListener {
 					menuPrint("New highscore!", 7);
 				}
 				menuPrint("Score: " + (int) scoreString, 6);
-				menuPrint("Game Over!", 4 / 5);
+				menuPrint("Game Over", 8);
 				menuPrint("Tap Anywhere to Play Again", 4);
 			} else {
 				menuPrint("Welcome to Innovation Flight!!!!", 6);
@@ -183,13 +183,13 @@ public class Main_Game_Class implements ApplicationListener {
 
 			/* Text Display */
 			float x = mP.getPosition().x - Gdx.graphics.getWidth() / 10;
-			float y = Gdx.graphics.getHeight();
 
 			scoreString += mP.getVelocity().x / 5;
-			score.drawMultiLine(batch, String.valueOf((int) scoreString), x, y);
+			score.drawMultiLine(batch, String.valueOf((int) scoreString), x,
+					HEIGHT);
 			if (mP.getPosition().x / 50 < 13) {
 				text.scale(mP.getPosition().x / 75);
-				text.drawMultiLine(batch, "Go!", x, y);
+				text.drawMultiLine(batch, "Go!", x, HEIGHT);
 			} else
 				text.dispose();
 			if (mP.getPosition().x < WIDTH * 3 / 4
@@ -208,12 +208,6 @@ public class Main_Game_Class implements ApplicationListener {
 
 			/* Objects */
 
-			if (mP.getPosition().x % WIDTH == 0) {
-				prob_rock = rand.nextInt(6);
-				prob_star = rand.nextInt(1);
-				prob_jet = rand.nextInt(2);
-			}
-
 			for (int i = 0; i < 1000; i++) {
 				if (lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
 					if (objArr.get(i).equals("ROCK")) {
@@ -226,8 +220,9 @@ public class Main_Game_Class implements ApplicationListener {
 						batch.draw(star, lArr.get(i).x, lArr.get(i).y);
 						if (mP.getCircle().overlaps(
 								new Circle(lArr.get(i).x, lArr.get(i).y, 30f))) {
-							mP.collide(mP.getVelocity().x * 1 / 4, 25);
-							scoreString += 100;
+							mP.collide(mP.getVelocity().x * 2, 25);
+							// scoreString += 100;
+							lArr.set(i, new Obstacle(0, 0));
 						}
 					}
 				}
