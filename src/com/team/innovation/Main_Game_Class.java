@@ -214,13 +214,16 @@ public class Main_Game_Class implements ApplicationListener {
 						batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
 						if (mP.getCircle().overlaps(
 								new Circle(lArr.get(i).x, lArr.get(i).y, 42f))) {
-							mP.collide(-10f, 100);
+							mP.collide(-mP.getVelocity().x, 100);
 						}
 					} else {
 						batch.draw(star, lArr.get(i).x, lArr.get(i).y);
 						if (mP.getCircle().overlaps(
 								new Circle(lArr.get(i).x, lArr.get(i).y, 30f))) {
-							mP.collide(mP.getVelocity().x * 2, 25);
+							if (mP.getVelocity().x > 15f)
+								mP.collide(40f - mP.getVelocity().x * 2, 25);
+							else
+								mP.collide(20f - mP.getVelocity().x, 25);
 							lArr.set(i, new Obstacle(0, 0));
 						}
 					}
