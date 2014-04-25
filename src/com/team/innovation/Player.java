@@ -165,14 +165,14 @@ public class Player {
 	/** End Update Loop **/
 
 	public boolean touchUp(int x, int y) {
-		if (x > WIDTH / 2 && y < HEIGHT / 2 && position.y < HEIGHT) {
+		if (x > WIDTH / 2 && y > HEIGHT / 4 && position.y < HEIGHT) {
 			return true;
 		}
 		return false;
 	}
 
 	public boolean touchDown(int x, int y) {
-		if (x > WIDTH / 2 && y > HEIGHT / 2 && position.y > 120) {
+		if (x < WIDTH / 2 && y > HEIGHT / 4 && position.y > 120) {
 			return true;
 		}
 		return false;
