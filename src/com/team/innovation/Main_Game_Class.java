@@ -104,6 +104,8 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.setProjectionMatrix(camera2.combined);
 
 			batch.begin();
+			
+			lastHighscore = prefs.getInteger("highscore");
 
 			if (scoreString > 0) {
 				if ((int) scoreString > prefs.getInteger("highscore")) {
@@ -111,9 +113,8 @@ public class Main_Game_Class implements ApplicationListener {
 					prefs.putInteger("highscore", (int) scoreString);
 					prefs.flush();
 				}
-				if ((int) scoreString > lastHighscore) {
-					menuPrint("New highscore!", 7);
-				}
+				
+				menuPrint("Highscore: " + lastHighscore ,10);
 				menuPrint("Score: " + (int) scoreString, 6);
 				menuPrint("Game Over", 8);
 				menuPrint("Tap Anywhere to Play Again", 4);
@@ -128,14 +129,12 @@ public class Main_Game_Class implements ApplicationListener {
 				/* Test purposes only, resets highscore */
 				if (Gdx.input.getX() > WIDTH * 8 / 10
 						&& Gdx.input.getY() < HEIGHT / 8) {
-					prefs.putInteger("highscore", 0);
 					scoreString = 0;
 					Gdx.input.vibrate(100);
 					batch.begin();
 					font.draw(batch, "-Reset-", 0, 0);
 					batch.end();
 					System.out.println("Reset");
-					prefs.flush();
 				} /**/
 				else {
 					if (mP.gameOver()) {
