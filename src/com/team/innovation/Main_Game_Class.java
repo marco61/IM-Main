@@ -206,8 +206,8 @@ public class Main_Game_Class implements ApplicationListener {
 			batch.begin();
 
 			/* Objects */
-			
-			for (int i = 0; i < 1000; i++) {
+
+			for (int i = 0; i < 500; i++) {
 				if (lArr.get(i).x > 3000 && lArr.get(i).y > 120) {
 					if (objArr.get(i).equals("ROCK")) {
 						batch.draw(rock, lArr.get(i).x, lArr.get(i).y);
@@ -220,9 +220,9 @@ public class Main_Game_Class implements ApplicationListener {
 						if (mP.getCircle().overlaps(
 								new Circle(lArr.get(i).x, lArr.get(i).y, 30f))) {
 							if (mP.getVelocity().x > 15f)
-								mP.collide(10f, 25);
-//							else
-//								mP.collide(25f - mP.getVelocity().x, 25);
+								mP.collide(40f - mP.getVelocity().x * 2, 25);
+							else
+								mP.collide(20f - mP.getVelocity().x, 25);
 							lArr.set(i, new Obstacle(0, 0));
 						}
 					}
